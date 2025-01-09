@@ -1,11 +1,13 @@
 package com.rookie.diting.loader.impl;
 
+import com.rookie.diting.config.DitingProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,30 +18,64 @@ import java.util.Set;
  */
 public class MySqlWordLoader implements SensitiveWordLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MySqlWordLoader.class.getName());
-    private final DataSource dataSource;
-    private final String tableName;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MySqlWordLoader.class);
 
-    public MySqlWordLoader(DataSource dataSource, String tableName) {
+    private final DataSource dataSource;
+    private final String table;
+    private final String columns;
+    private final Map<String, String> conditions;
+
+
+    public MySqlWordLoader(DataSource dataSource, DitingProperties properties) {
         this.dataSource = dataSource;
-        this.tableName = tableName;
+        this.table = properties.getConfig().get("table").toString();
+        this.columns = properties.getConfig().getOrDefault("columns", "word").toString();
+        this.conditions = properties.getConfigMap("conditions");
     }
 
     @Override
     public Set<String> loadSensitiveWords() throws Exception {
-        LOGGER.info("Loading sensitive words from MySQL table: " + tableName);
+        String sql = buildQuery();
+        LOGGER.info("Generated SQL: {}", sql);
+
         Set<String> words = new HashSet<>();
-
         try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT word FROM " + tableName)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            while (resultSet.next()) {
-                words.add(resultSet.getString("word"));
+            // 动态填充条件参数
+            if (conditions != null) {
+                int paramIndex = 1;
+                for (String value : conditions.values()) {
+                    statement.setString(paramIndex++, value);
+                }
+            }
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    words.add(resultSet.getString(1).trim()); // 获取查询结果的第一列
+                }
             }
         }
 
-        LOGGER.info("Loaded sensitive words: " + words);
+        LOGGER.info("Loaded sensitive words: {}", words);
         return words;
+    }
+
+    /**
+     * 构建动态查询 SQL
+     */
+    private String buildQuery() {
+        StringBuilder query = new StringBuilder("SELECT ").append(columns)
+                .append(" FROM ").append(table);
+
+        if (conditions != null && !conditions.isEmpty()) {
+            query.append(" WHERE ");
+            for (String key : conditions.keySet()) {
+                query.append(key).append(" = ? AND "); // 参数化条件
+            }
+            query.setLength(query.length() - 5); // 去掉最后的 " AND "
+        }
+
+        return query.toString();
     }
 }
