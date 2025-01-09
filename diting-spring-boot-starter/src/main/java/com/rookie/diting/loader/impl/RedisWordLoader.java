@@ -1,10 +1,11 @@
 package com.rookie.diting.loader.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * Name：RedisWordLoader
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class RedisWordLoader implements SensitiveWordLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(RedisWordLoader.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisWordLoader.class.getName());
     private final RedisTemplate<String, String> redisTemplate;
     private final String key;
 

@@ -36,10 +36,13 @@ public class DitingAutoConfiguration {
     public SensitiveWordLoader txtWordLoader(DitingProperties properties) {
         validateConfig(properties, "filePath");
         String filePath = properties.getConfig().get("filePath");
-        LOGGER.info("Configuring TxtWordLoader with file path: {}", filePath);
+        String delimiter = properties.resolveDelimiter(); // 解析用户友好的分隔符
+
+        LOGGER.info("Configuring TxtWordLoader with file path: {} and delimiter: {}", filePath, delimiter);
 
         TxtWordLoader txtLoader = new TxtWordLoader();
         txtLoader.setResourcePath(filePath);
+        txtLoader.setDelimiter(delimiter);
         return txtLoader;
     }
 

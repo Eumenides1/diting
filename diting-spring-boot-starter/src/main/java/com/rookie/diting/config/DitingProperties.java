@@ -1,5 +1,6 @@
 package com.rookie.diting.config;
 
+import com.rookie.diting.constants.Delimiter;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +30,12 @@ public class DitingProperties {
     @NotNull(message = "Config must not be null.")
     private Map<String, String> config;
 
+    /**
+     * 分隔符，仅适用于 TXT 类型，支持常量
+     * 默认值为换行符：NEWLINE
+     */
+    private String delimiter = "NEWLINE";
+
     public LoaderType getLoaderType() {
         return loaderType;
     }
@@ -43,6 +50,21 @@ public class DitingProperties {
 
     public void setConfig(Map<String, String> config) {
         this.config = config;
+    }
+
+    public String getDelimiter() {
+        return delimiter;
+    }
+
+    public void setDelimiter(String delimiter) {
+        this.delimiter = delimiter;
+    }
+
+    /**
+     * 获取解析后的分隔符值
+     */
+    public String resolveDelimiter() {
+        return Delimiter.getDelimiterValue(delimiter);
     }
 
     /**

@@ -1,10 +1,12 @@
 package com.rookie.diting.loader.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * Name：MySqlWordLoader
@@ -14,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class MySqlWordLoader implements SensitiveWordLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(MySqlWordLoader.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MySqlWordLoader.class.getName());
     private final DataSource dataSource;
     private final String tableName;
 

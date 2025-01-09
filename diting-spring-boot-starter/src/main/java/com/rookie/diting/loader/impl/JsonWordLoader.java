@@ -1,12 +1,13 @@
 package com.rookie.diting.loader.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
+
 
 /**
  * Name：JsonWordLoader
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
 
 public class JsonWordLoader implements SensitiveWordLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(JsonWordLoader.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonWordLoader.class);
     private String resourcePath;
 
     public void setResourcePath(String resourcePath) {

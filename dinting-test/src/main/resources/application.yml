@@ -1,7 +1,8 @@
 sensitive-word:
-  loader-type: REDIS
+  loader-type: TXT
   config:
-    key: sensitive_words
+    filePath: sensitive_words.txt
+  delimiter: COMMA
 
 spring:
   datasource:
