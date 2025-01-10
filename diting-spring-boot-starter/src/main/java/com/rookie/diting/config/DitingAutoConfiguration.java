@@ -66,6 +66,7 @@ public class DitingAutoConfiguration {
     public SensitiveWordLoader mysqlWordLoader(DataSource dataSource, DitingProperties properties) {
         if (dataSource == null) {
             LOGGER.error("DataSource is null. Please check your configuration.");
+            throw new IllegalStateException("DataSource is null. Please check your configuration.");
         }
         LOGGER.info("Configuring MySqlWordLoader with table: {}, columns: {}, conditions: {}",
                 properties.getConfig().get("table"),

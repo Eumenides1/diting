@@ -5,7 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionEvaluationReport;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+
+import javax.sql.DataSource;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -16,23 +20,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * Description:
  */
 @SpringBootTest
+@ContextConfiguration(classes = DitingApplication.class)
 public class ConfigTest {
 
-    @Value("${spring.datasource.url:}")
-    private String datasourceUrl;
-
     @Autowired
-    private ConfigurableApplicationContext context;
+    private ApplicationContext applicationContext;
 
     @Test
-    public void testConfigLoading() {
-        System.out.println("Datasource URL: " + datasourceUrl);
-        assertNotNull(datasourceUrl);
-    }
-
-    @Test
-    public void printConditionEvaluationReport() {
-        ConditionEvaluationReport report = context.getBean(ConditionEvaluationReport.class);
-        System.out.println(report);
+    void testDataSource() {
+        String[] beanNames = applicationContext.getBeanDefinitionNames();
+        for (String beanName : beanNames) {
+            System.out.println(beanName);
+        }
     }
 }

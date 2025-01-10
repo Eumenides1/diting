@@ -2,35 +2,31 @@ package com.rookie.diting.test;
 
 import com.rookie.diting.config.DitingAutoConfiguration;
 import com.rookie.diting.config.DitingProperties;
+import com.rookie.diting.loader.impl.MySqlWordLoader;
 import com.rookie.diting.loader.impl.SensitiveWordLoader;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.TestPropertySource;
 
+import javax.sql.DataSource;
 import java.util.Map;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = {DitingAutoConfiguration.class})
+@SpringBootTest
 public class MySQLCustomTest {
 
     @Autowired
-    private SensitiveWordLoader loader;
-
-
-    @Value("${spring.datasource.url}")
-    private String datasourceUrl;
-
-    @Test
-    public void testDatasourceConfig() {
-        System.out.println("Datasource URL: " + datasourceUrl);
-    }
+    private SensitiveWordLoader sensitiveWordLoader;
 
     @Test
     public void testLoadSensitiveWordsWithConditions() throws Exception {
+
         // 加载敏感词
-        Set<String> words = loader.loadSensitiveWords();
+        Set<String> words = sensitiveWordLoader.loadSensitiveWords();
 
         // 验证结果
         assertNotNull(words);

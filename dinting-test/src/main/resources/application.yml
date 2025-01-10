@@ -9,7 +9,7 @@ sensitive-word:
 
 spring:
   datasource:
-    url: jdbc:mysql://gz-cynosdbmysql-grp-ohj017lr.sql.tencentcdb.com:23186/sensitive_db
+    url: jdbc:mysql://localhost:3306/sensitive_db
     username: root
     password: 8uhb^YJm
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,13 +20,3 @@ spring:
       port: 6666
       password: 8uhb^YJm
       database: 0
-  sql:
-    init:
-      mode: always
-
-logging:
-  level:
-    org:
-      springframework:
-        boot:
-          autoconfigure: DEBUG
