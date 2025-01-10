@@ -25,9 +25,9 @@
         </dependency>
         <!-- Starter 模块 -->
         <dependency>
-            <groupId>com.rookie.diting</groupId>
+            <groupId>io.github.eumenides1</groupId>
             <artifactId>diting-spring-boot-starter</artifactId>
-            <version>0.0.1</version>
+            <version>0.0.2</version>
         </dependency>
         <!-- Spring Boot Test -->
         <dependency>

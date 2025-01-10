@@ -1,8 +1,8 @@
 package com.rookie.diting.config;
 
+import com.rookie.diting.loader.SensitiveWordLoader;
 import com.rookie.diting.loader.impl.MySqlWordLoader;
 import com.rookie.diting.loader.impl.RedisWordLoader;
-import com.rookie.diting.loader.impl.SensitiveWordLoader;
 import com.rookie.diting.loader.impl.JsonWordLoader;
 import com.rookie.diting.loader.impl.TxtWordLoader;
 import org.slf4j.Logger;

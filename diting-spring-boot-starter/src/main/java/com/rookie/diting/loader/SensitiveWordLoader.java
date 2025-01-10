@@ -1,7 +1,6 @@
-package com.rookie.diting.loader.impl;
+package com.rookie.diting.loader;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Name：SensitiveWordLoader

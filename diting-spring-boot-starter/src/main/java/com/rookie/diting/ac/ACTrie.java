@@ -1,4 +1,4 @@
-package com.rookie.diting.core.ac;
+package com.rookie.diting.ac;
 
 import java.util.*;
 

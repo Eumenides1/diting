@@ -1,7 +1,8 @@
 package com.rookie.diting.context;
 
-import com.rookie.diting.core.ac.ACTrie;
-import com.rookie.diting.loader.impl.SensitiveWordLoader;
+
+import com.rookie.diting.ac.ACTrie;
+import com.rookie.diting.loader.SensitiveWordLoader;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,5 +1,6 @@
 package com.rookie.diting.loader.impl;
 
+import com.rookie.diting.loader.SensitiveWordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;

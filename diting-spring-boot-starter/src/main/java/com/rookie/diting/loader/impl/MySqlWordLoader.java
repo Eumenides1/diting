@@ -1,7 +1,7 @@
 package com.rookie.diting.loader.impl;
 
 import com.rookie.diting.config.DitingProperties;
-import com.rookie.diting.core.ac.ACTrie;
+import com.rookie.diting.loader.SensitiveWordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
