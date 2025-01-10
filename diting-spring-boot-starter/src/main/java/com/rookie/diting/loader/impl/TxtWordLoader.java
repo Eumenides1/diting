@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,10 +33,18 @@ public class TxtWordLoader implements SensitiveWordLoader {
     }
 
     @Override
-    public Set<String> loadSensitiveWords() throws Exception {
+    public List<String> loadSensitiveWords() throws Exception {
         LOGGER.info("Loading sensitive words from TXT file: {} with delimiter: {}", resourcePath, delimiter);
+        // 加载敏感词
+        List<String> words = loadWordsFromTxt();
+        LOGGER.info("Loaded sensitive words: {}", words);
+        return words;
+    }
+    /**
+     * 从 TXT 文件中加载敏感词
+     */
+    private List<String> loadWordsFromTxt() throws Exception {
         Set<String> words = new HashSet<>();
-
         ClassPathResource resource = new ClassPathResource(resourcePath);
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
             StringBuilder content = new StringBuilder();
@@ -49,8 +59,6 @@ public class TxtWordLoader implements SensitiveWordLoader {
                 }
             }
         }
-
-        LOGGER.info("Loaded sensitive words: {}", words);
-        return words;
+        return new ArrayList<>(words);
     }
 }

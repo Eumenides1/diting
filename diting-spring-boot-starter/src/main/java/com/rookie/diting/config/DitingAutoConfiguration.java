@@ -5,7 +5,6 @@ import com.rookie.diting.loader.impl.RedisWordLoader;
 import com.rookie.diting.loader.impl.SensitiveWordLoader;
 import com.rookie.diting.loader.impl.JsonWordLoader;
 import com.rookie.diting.loader.impl.TxtWordLoader;
-import com.rookie.diting.service.SensitiveWordChecker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.sql.DataSource;
-import java.util.Map;
 
 
 /**
@@ -85,12 +83,6 @@ public class DitingAutoConfiguration {
         LOGGER.info("Configuring RedisWordLoader with key: {}", key);
 
         return new RedisWordLoader(redisTemplate, key);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public SensitiveWordChecker sensitiveWordChecker(SensitiveWordLoader loader) throws Exception {
-        return new SensitiveWordChecker(loader);
     }
 
     private void validateConfig(DitingProperties properties, String requiredKey) {

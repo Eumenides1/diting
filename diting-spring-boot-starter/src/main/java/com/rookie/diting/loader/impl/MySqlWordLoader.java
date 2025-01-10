@@ -1,14 +1,13 @@
 package com.rookie.diting.loader.impl;
 
 import com.rookie.diting.config.DitingProperties;
+import com.rookie.diting.core.ac.ACTrie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Name：MySqlWordLoader
@@ -25,7 +24,6 @@ public class MySqlWordLoader implements SensitiveWordLoader {
     private final String columns;
     private final Map<String, String> conditions;
 
-
     public MySqlWordLoader(DataSource dataSource, DitingProperties properties) {
         this.dataSource = dataSource;
         this.table = properties.getConfig().get("table").toString();
@@ -34,14 +32,12 @@ public class MySqlWordLoader implements SensitiveWordLoader {
     }
 
     @Override
-    public Set<String> loadSensitiveWords() throws Exception {
+    public List<String> loadSensitiveWords() throws Exception {
         String sql = buildQuery();
         LOGGER.info("Generated SQL: {}", sql);
-
-        Set<String> words = new HashSet<>();
+        List<String> words = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-
             // 动态填充条件参数
             if (conditions != null) {
                 int paramIndex = 1;
@@ -49,14 +45,14 @@ public class MySqlWordLoader implements SensitiveWordLoader {
                     statement.setString(paramIndex++, value);
                 }
             }
-
+            LOGGER.info("Generated statement: {}", statement);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    words.add(resultSet.getString(1).trim()); // 获取查询结果的第一列
+                    String word = resultSet.getString(1).trim();// 获取查询结果的第一列
+                    words.add(word);
                 }
             }
         }
-
         LOGGER.info("Loaded sensitive words: {}", words);
         return words;
     }

@@ -1,5 +1,6 @@
 package com.rookie.diting.loader.impl;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -9,5 +10,5 @@ import java.util.Set;
  * Description: 敏感词加载接口
  */
 public interface SensitiveWordLoader {
-    Set<String> loadSensitiveWords() throws Exception;
+    List<String> loadSensitiveWords() throws Exception;
 }
