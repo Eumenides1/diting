@@ -34,12 +34,23 @@
 
 #### TXT 文件加载
 
+- 简单配置 
 ```yaml
 sensitive-word:
   loader-type: TXT
   config:
     filePath: sensitive_words.txt
 ```
+
+- 支持配置分隔符,默认以换行符分割
+```yaml
+sensitive-word:
+  loader-type: TXT
+  config:
+    filePath: sensitive_words.txt
+    delimiter: COMMA
+```
+
 
 #### JSON 文件加载
 
@@ -51,6 +62,8 @@ sensitive-word:
 ```
 
 #### MySQL 数据库加载
+
+- 简单数据库配置，默认读取字段名为`word`
 
 ```yaml
 sensitive-word:
@@ -64,6 +77,18 @@ spring:
     username: root
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
+```
+
+- 支持复杂配置,可配置表名，字段，过滤条件等
+```yaml
+sensitive-word:
+  loader-type: MYSQL
+  config:
+    table: sensitive_words
+    columns: word
+    conditions:
+      is_active: "1"
+      type: "prohibited"
 ```
 
 #### Redis 加载
