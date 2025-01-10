@@ -14,6 +14,7 @@ import java.util.Map;
  * Description:
  */
 
+
 @ConfigurationProperties(prefix = "sensitive-word")
 @Validated
 public class DitingProperties {
@@ -28,7 +29,7 @@ public class DitingProperties {
      * 配置参数 (根据 loaderType 的类型动态校验)
      */
     @NotNull(message = "Config must not be null.")
-    private Map<String, String> config;
+    private Map<String, Object> config;
 
     /**
      * 分隔符，仅适用于 TXT 类型，支持常量
@@ -44,11 +45,11 @@ public class DitingProperties {
         this.loaderType = loaderType;
     }
 
-    public Map<String, String> getConfig() {
+    public Map<String, Object> getConfig() {
         return config;
     }
 
-    public void setConfig(Map<String, String> config) {
+    public void setConfig(Map<String, Object> config) {
         this.config = config;
     }
 
@@ -65,6 +66,21 @@ public class DitingProperties {
      */
     public String resolveDelimiter() {
         return Delimiter.getDelimiterValue(delimiter);
+    }
+
+    /**
+     * 获取配置中的 Map 值
+     *
+     * @param key 配置键
+     * @return 嵌套的 Map 值
+     */
+    @SuppressWarnings("unchecked")
+    public Map<String, String> getConfigMap(String key) {
+        Object value = config.get(key);
+        if (value instanceof Map) {
+            return (Map<String, String>) value;
+        }
+        throw new IllegalArgumentException("Key " + key + " is not a valid Map<String, String> type.");
     }
 
     /**

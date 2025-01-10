@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.sql.DataSource;
+import java.util.Map;
 
 
 /**
@@ -35,7 +36,7 @@ public class DitingAutoConfiguration {
     @ConditionalOnProperty(name = "sensitive-word.loader-type", havingValue = "TXT")
     public SensitiveWordLoader txtWordLoader(DitingProperties properties) {
         validateConfig(properties, "filePath");
-        String filePath = properties.getConfig().get("filePath");
+        String filePath = properties.getConfig().get("filePath").toString();
         String delimiter = properties.resolveDelimiter(); // 解析用户友好的分隔符
 
         LOGGER.info("Configuring TxtWordLoader with file path: {} and delimiter: {}", filePath, delimiter);
@@ -51,7 +52,7 @@ public class DitingAutoConfiguration {
     @ConditionalOnProperty(name = "sensitive-word.loader-type", havingValue = "JSON")
     public SensitiveWordLoader jsonWordLoader(DitingProperties properties) {
         validateConfig(properties, "filePath");
-        String filePath = properties.getConfig().get("filePath");
+        String filePath = properties.getConfig().get("filePath").toString();
         LOGGER.info("Configuring JsonWordLoader with file path: {}", filePath);
 
         JsonWordLoader jsonLoader = new JsonWordLoader();
@@ -63,11 +64,16 @@ public class DitingAutoConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnProperty(name = "sensitive-word.loader-type", havingValue = "MYSQL")
     public SensitiveWordLoader mysqlWordLoader(DataSource dataSource, DitingProperties properties) {
-        validateConfig(properties, "table");
-        String table = properties.getConfig().get("table");
-        LOGGER.info("Configuring MySqlWordLoader with table: {}", table);
+        if (dataSource == null) {
+            LOGGER.error("DataSource is null. Please check your configuration.");
+            throw new IllegalStateException("DataSource is null. Please check your configuration.");
+        }
+        LOGGER.info("Configuring MySqlWordLoader with table: {}, columns: {}, conditions: {}",
+                properties.getConfig().get("table"),
+                properties.getConfig().getOrDefault("columns", "word"),
+                properties.getConfigMap("conditions"));
 
-        return new MySqlWordLoader(dataSource, table);
+        return new MySqlWordLoader(dataSource, properties);
     }
 
     @Bean
@@ -75,7 +81,7 @@ public class DitingAutoConfiguration {
     @ConditionalOnProperty(name = "sensitive-word.loader-type", havingValue = "REDIS")
     public SensitiveWordLoader redisWordLoader(RedisTemplate<String, String> redisTemplate, DitingProperties properties) {
         validateConfig(properties, "key");
-        String key = properties.getConfig().get("key");
+        String key = properties.getConfig().get("key").toString();
         LOGGER.info("Configuring RedisWordLoader with key: {}", key);
 
         return new RedisWordLoader(redisTemplate, key);
