@@ -37,6 +37,16 @@ public class DitingProperties {
      */
     private String delimiter = "NEWLINE";
 
+    private boolean logSensitiveWords = false; // 默认关闭敏感词日志
+
+    public boolean isLogSensitiveWords() {
+        return logSensitiveWords;
+    }
+
+    public void setLogSensitiveWords(boolean logSensitiveWords) {
+        this.logSensitiveWords = logSensitiveWords;
+    }
+
     public LoaderType getLoaderType() {
         return loaderType;
     }
