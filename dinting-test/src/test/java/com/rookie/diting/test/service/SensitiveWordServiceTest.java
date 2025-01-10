@@ -20,7 +20,7 @@ public class SensitiveWordServiceTest {
 
     @Test
     public void testReplaceSensitiveWords() {
-        String result = sensitiveWordService.replaceSensitiveWords("这是一段包含敏感词word1和word2的");
+        String result = sensitiveWordService.replaceSensitiveWords("这是一段包含敏感词做户口本和word2的");
         System.out.println(result);
     }
 

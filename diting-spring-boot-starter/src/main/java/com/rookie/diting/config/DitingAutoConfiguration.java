@@ -1,5 +1,6 @@
 package com.rookie.diting.config;
 
+import com.rookie.diting.constants.Delimiter;
 import com.rookie.diting.loader.SensitiveWordLoader;
 import com.rookie.diting.loader.impl.MySqlWordLoader;
 import com.rookie.diting.loader.impl.RedisWordLoader;
@@ -36,7 +37,6 @@ public class DitingAutoConfiguration {
         validateConfig(properties, "filePath");
         String filePath = properties.getConfig().get("filePath").toString();
         String delimiter = properties.resolveDelimiter(); // 解析用户友好的分隔符
-
         LOGGER.info("Configuring TxtWordLoader with file path: {} and delimiter: {}", filePath, delimiter);
 
         TxtWordLoader txtLoader = new TxtWordLoader();
@@ -83,6 +83,19 @@ public class DitingAutoConfiguration {
         LOGGER.info("Configuring RedisWordLoader with key: {}", key);
 
         return new RedisWordLoader(redisTemplate, key);
+    }
+
+    // 默认的 TxtWordLoader，加载组件内置的敏感词库
+    @Bean
+    @ConditionalOnMissingBean
+    public SensitiveWordLoader defaultWordLoader() {
+        String defaultFilePath = "sensitive_word_dict.txt"; // 内置敏感词库路径
+        LOGGER.info("No user configuration found. Loading default sensitive words from: {}", defaultFilePath);
+
+        TxtWordLoader defaultLoader = new TxtWordLoader();
+        defaultLoader.setResourcePath(defaultFilePath);
+        defaultLoader.setDelimiter(Delimiter.NEWLINE.getValue()); // 内置敏感词库使用换行分隔
+        return defaultLoader;
     }
 
     private void validateConfig(DitingProperties properties, String requiredKey) {

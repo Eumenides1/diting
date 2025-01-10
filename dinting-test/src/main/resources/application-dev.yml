@@ -1,11 +1,8 @@
-sensitive-word:
-  loader-type: MYSQL
-  config:
-    table: sensitive_words
-    columns: word
-    conditions:
-      is_active: "1"
-      type: "prohibited"
+#sensitive-word:
+#  loader-type: TXT
+#  config:
+#    filePath: sensitive_words.txt
+#  delimiter: COMMA
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/sensitive_db
