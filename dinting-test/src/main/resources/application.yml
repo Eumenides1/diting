@@ -1,22 +1,3 @@
-sensitive-word:
-  loader-type: MYSQL
-  config:
-    table: sensitive_words
-    columns: word
-    conditions:
-      is_active: "1"
-      type: "prohibited"
-
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/sensitive_db
-    username: root
-    password: 8uhb^YJm
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  data:
-    redis:
-      host: 49.232.228.92
-      port: 6666
-      password: 8uhb^YJm
-      database: 0
+  profiles:
+    active: dev
