@@ -5,7 +5,10 @@ import com.rookie.diting.loader.SensitiveWordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -25,7 +28,7 @@ public class JsonWordLoader implements SensitiveWordLoader {
     }
 
     @Override
-    public List<String> loadSensitiveWords() throws Exception {
+    public Set<String> loadSensitiveWords() throws Exception {
         LOGGER.info("Loading sensitive words from JSON file: " + resourcePath);
 
         // 加载 JSON 文件
@@ -33,7 +36,7 @@ public class JsonWordLoader implements SensitiveWordLoader {
         ObjectMapper mapper = new ObjectMapper();
 
         // 直接读取 JSON 文件为 List<String>
-        List<String> words = mapper.readValue(resource.getInputStream(), List.class);
+        Set<String> words = mapper.readValue(resource.getInputStream(), HashSet.class);
         LOGGER.info("Loaded sensitive words: " + words);
         return words;
     }

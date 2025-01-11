@@ -1,8 +1,15 @@
-#sensitive-word:
-#  loader-type: TXT
-#  config:
-#    filePath: sensitive_words.txt
-#  delimiter: COMMA
+sensitive-word:
+  loaders:
+    txt:
+      enabled: true
+      filePath: sensitive_words.txt
+      delimiter:
+    json:
+      enabled: false
+      filePath: sensitive_words.json
+  # 默认加载器是否启用（可选）
+  default-loader:
+    enabled: true
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/sensitive_db

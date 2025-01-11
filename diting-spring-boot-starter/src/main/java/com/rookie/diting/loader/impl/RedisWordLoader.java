@@ -28,27 +28,27 @@ public class RedisWordLoader implements SensitiveWordLoader {
     }
 
     @Override
-    public  List<String> loadSensitiveWords() throws Exception {
+    public Set<String> loadSensitiveWords() throws Exception {
         LOGGER.info("Loading sensitive words from Redis key: {}, data type: {}", key, redisTemplate.type(key));
         // 加载敏感词
-        List<String> words = loadWordsFromRedis(redisTemplate.type(key));
+        Set<String> words = loadWordsFromRedis(redisTemplate.type(key));
         LOGGER.info("Loaded sensitive words: {}", words);
         return words;
     }
 
-    private List<String> loadWordsFromRedis(DataType dataType) {
+    private Set<String> loadWordsFromRedis(DataType dataType) {
         if (dataType == DataType.SET) {
             Set<String> wordSet = redisTemplate.opsForSet().members(key);
             if (wordSet == null || wordSet.isEmpty()) {
                 throw new IllegalStateException("No sensitive words found in Redis key: " + key);
             }
-            return new ArrayList<>(wordSet);
+            return wordSet;
         } else if (dataType == DataType.LIST) {
-            List<String> words = redisTemplate.opsForList().range(key, 0, -1);
-            if (words == null || words.isEmpty()) {
+            List<String> wordSet = redisTemplate.opsForList().range(key, 0, -1);
+            if (wordSet == null || wordSet.isEmpty()) {
                 throw new IllegalStateException("No sensitive words found in Redis key: " + key);
             }
-            return words;
+            return Set.copyOf(wordSet);
         } else {
             throw new IllegalArgumentException("Unsupported data type for key: " + key + ". Expected SET or LIST.");
         }

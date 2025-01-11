@@ -34,18 +34,16 @@ public class TxtWordLoader implements SensitiveWordLoader {
     }
 
     @Override
-    public List<String> loadSensitiveWords() throws Exception {
+    public Set<String> loadSensitiveWords() throws Exception {
         LOGGER.info("Loading sensitive words from TXT file: {} with delimiter: {}", resourcePath, delimiter);
         // 加载敏感词
-        List<String> words = loadWordsFromTxt();
-        //  TODO 提供日志开启功能开启脱敏词打印
-        // LOGGER.info("Loaded sensitive words: {}", words);
+        Set<String> words = loadWordsFromTxt();
         return words;
     }
     /**
      * 从 TXT 文件中加载敏感词
      */
-    private List<String> loadWordsFromTxt() throws Exception {
+    private Set<String> loadWordsFromTxt() throws Exception {
         Set<String> words = new HashSet<>();
         ClassPathResource resource = new ClassPathResource(resourcePath);
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
@@ -54,7 +52,7 @@ public class TxtWordLoader implements SensitiveWordLoader {
             while ((line = reader.readLine()) != null) {
                 content.append(line).append("\n"); // 保证所有内容读取
             }
-            LOGGER.info("delimiter: {}",delimiter);
+            LOGGER.info("delimiter: {}", delimiter);
             String[] wordArray = content.toString().split(delimiter);
             for (String word : wordArray) {
                 if (!word.trim().isEmpty()) {
@@ -62,6 +60,6 @@ public class TxtWordLoader implements SensitiveWordLoader {
                 }
             }
         }
-        return new ArrayList<>(words);
+        return words;
     }
 }

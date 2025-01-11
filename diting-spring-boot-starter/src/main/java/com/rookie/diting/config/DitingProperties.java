@@ -2,7 +2,10 @@ package com.rookie.diting.config;
 
 import com.rookie.diting.constants.Delimiter;
 import jakarta.validation.constraints.NotNull;
+import jdk.jfr.Description;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Map;
@@ -15,88 +18,48 @@ import java.util.Map;
  */
 
 
+
 @ConfigurationProperties(prefix = "sensitive-word")
-@Validated
+@Data
 public class DitingProperties {
+    @Description("敏感词库加载方式")
+    private Loaders loaders;
+    @Description("是否开启默认敏感词库加载")
+    private DefaultLoader defaultLoader;
 
-    /**
-     * 加载器类型 (TXT, JSON, MYSQL, REDIS)
-     */
-    @NotNull(message = "Loader type must be specified.")
-    private LoaderType loaderType;
+    @Data
+    public static class Loaders {
+        private Txt txt;
+        private Json json;
+        private Mysql mysql;
+        private Redis redis;
 
-    /**
-     * 配置参数 (根据 loaderType 的类型动态校验)
-     */
-    @NotNull(message = "Config must not be null.")
-    private Map<String, Object> config;
-
-    /**
-     * 分隔符，仅适用于 TXT 类型，支持常量
-     * 默认值为换行符：NEWLINE
-     */
-    private String delimiter = "NEWLINE";
-
-    private boolean logSensitiveWords = false; // 默认关闭敏感词日志
-
-    public boolean isLogSensitiveWords() {
-        return logSensitiveWords;
-    }
-
-    public void setLogSensitiveWords(boolean logSensitiveWords) {
-        this.logSensitiveWords = logSensitiveWords;
-    }
-
-    public LoaderType getLoaderType() {
-        return loaderType;
-    }
-
-    public void setLoaderType(LoaderType loaderType) {
-        this.loaderType = loaderType;
-    }
-
-    public Map<String, Object> getConfig() {
-        return config;
-    }
-
-    public void setConfig(Map<String, Object> config) {
-        this.config = config;
-    }
-
-    public String getDelimiter() {
-        return delimiter;
-    }
-
-    public void setDelimiter(String delimiter) {
-        this.delimiter = delimiter;
-    }
-
-    /**
-     * 获取解析后的分隔符值
-     */
-    public String resolveDelimiter() {
-        return Delimiter.getDelimiterValue(delimiter);
-    }
-
-    /**
-     * 获取配置中的 Map 值
-     *
-     * @param key 配置键
-     * @return 嵌套的 Map 值
-     */
-    @SuppressWarnings("unchecked")
-    public Map<String, String> getConfigMap(String key) {
-        Object value = config.get(key);
-        if (value instanceof Map) {
-            return (Map<String, String>) value;
+        @Data
+        public static class Txt {
+            private boolean enabled;
+            private String filePath;
+            private String delimiter;
         }
-        throw new IllegalArgumentException("Key " + key + " is not a valid Map<String, String> type.");
+        @Data
+        public static class Json {
+            private boolean enabled;
+            private String filePath;
+        }
+        @Data
+        public static class Mysql {
+            private boolean enabled;
+            private String table;
+            private String columns;
+            private Map<String,String> conditions;
+        }
+        @Data
+        public static class Redis {
+            private boolean enabled;
+            private String key;
+        }
     }
-
-    /**
-     * 加载器类型的枚举
-     */
-    public enum LoaderType {
-        TXT, JSON, MYSQL, REDIS
+    @Data
+    public static class DefaultLoader {
+        private boolean enabled = true; // 默认启用
     }
 }

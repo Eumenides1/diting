@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Classname SensitiveWordContext
@@ -24,20 +26,19 @@ public class SensitiveWordContext {
     private final SensitiveWordLoader loader;
     private ACTrie acTrie; // AC 自动机树
 
-    @Autowired
     public SensitiveWordContext(SensitiveWordLoader loader) {
         this.loader = loader;
     }
+
     /**
      * 初始化 AC 自动机树
      */
     @PostConstruct
     public void init() throws Exception {
         LOGGER.info("Initializing AC trie...");
-        List<String> sensitiveWords = loader.loadSensitiveWords();
-        this.acTrie = new ACTrie();
-        this.acTrie.createACTrie(sensitiveWords); // 构建 AC 自动机树
-        LOGGER.info("AC trie initialized.");
+        List<String> sensitiveWords = List.copyOf(loader.loadSensitiveWords());
+        this.acTrie = new ACTrie(sensitiveWords);
+        LOGGER.info("AC trie initialized with {} sensitive words.", sensitiveWords.size());
     }
 
     /**
@@ -48,5 +49,26 @@ public class SensitiveWordContext {
             throw new IllegalStateException("AC trie has not been initialized.");
         }
         return acTrie;
+    }
+
+    /**
+     * 重新加载敏感词库并刷新 AC 自动机树
+     */
+    public synchronized void reloadSensitiveWords() throws Exception {
+        LOGGER.info("Reloading sensitive words...");
+        List<String> sensitiveWords = List.copyOf(loader.loadSensitiveWords());
+        this.acTrie = new ACTrie(sensitiveWords);
+        LOGGER.info("AC trie reloaded with {} sensitive words.", sensitiveWords.size());
+    }
+
+    /**
+     * 检测句子中的敏感词
+     *
+     * @param text 需要检测的文本
+     * @return 句子中检测到的敏感词集合
+     */
+    public List<String> findSensitiveWords(String text) {
+        ACTrie trie = getAcTrie();
+        return trie.findSensitiveWords(text);
     }
 }

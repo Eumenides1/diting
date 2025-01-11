@@ -3,7 +3,9 @@ package com.rookie.diting.test;
 import com.rookie.diting.ac.ACTrie;
 import com.rookie.diting.loader.impl.TxtWordLoader;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Name：AcTrieBuildTest
@@ -13,10 +15,11 @@ import java.util.List;
  */
 public class AcTrieBuildTest {
     public static void main(String[] args) throws Exception {
-        ACTrie acTrie = new ACTrie();
         TxtWordLoader txtWordLoader = new TxtWordLoader();
         txtWordLoader.setResourcePath("sensitive_word_dict.txt");
-        List<String> strings = txtWordLoader.loadSensitiveWords();
-        acTrie.createACTrie(strings);
+        Set<String> strings = txtWordLoader.loadSensitiveWords();
+        ACTrie acTrie = new ACTrie((new ArrayList<>(strings)));
+        List<String> sensitiveWords = acTrie.findSensitiveWords("1989天安门");
+        System.out.println(sensitiveWords);
     }
 }
