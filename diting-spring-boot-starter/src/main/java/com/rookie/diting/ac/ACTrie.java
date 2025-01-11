@@ -10,168 +10,100 @@ import java.util.*;
  */
 public class ACTrie {
 
-    private final static char MASK = '*'; // 替代字符
+    private final ACNode root;
 
-    private  Word  root;
-    // 节点
-    static class Word{
-        // 判断是否是敏感词结尾
-        boolean end=false;
-        // 失败回调节点/状态
-        Word failOver=null;
-        // 记录字符偏移
-        int depth=0;
-        // 下个自动机状态
-        Map<Character,Word> next=new HashMap<>();
-        public boolean hasChild(char c) {
-            return next.containsKey(c);
-        }
+    public ACTrie(List<String> keywords) {
+        root = new ACNode();
+        buildTrie(keywords);
+        buildFailurePointers();
     }
-    //构建ACTrie
-    public  void createACTrie(List<String> list){
-        Word currentNode = new Word();
-        root=currentNode;
-        for(String key : list)
-        {
-            currentNode=root;
-            for(int j=0;j<key.length();j++)
-            {
-                if(currentNode.next!=null&&currentNode.next.containsKey(key.charAt(j))){
-                    currentNode= currentNode.next.get(key.charAt(j));
-                    // 防止乱序输入改变end,比如da，dadac，dadac先进入，第二个a为false,da进入后把a设置为true
-                    // 这样结果就是a是end，c也是end
-                    if(j==key.length()-1){
-                        currentNode.end=true;
-                    }
-                }else {
-                    Word map = new Word();
-                    if(j==key.length()-1){
-                        map.end=true;
-                    }
-                    currentNode.next.put(key.charAt(j), map);
-                    currentNode=map;
-                }
-                currentNode.depth = j+1;
+
+    /**
+     * 构建 Trie 树
+     */
+    private void buildTrie(List<String> keywords) {
+        for (String keyword : keywords) {
+            ACNode node = root;
+            for (char c : keyword.toCharArray()) {
+                node = node.children.computeIfAbsent(c, k -> new ACNode());
             }
+            node.isEnd = true;
+            node.output.add(keyword);
         }
-        initFailOver();
     }
-    // 初始化匹配失败回调节点/状态
-    public  void initFailOver(){
-        Queue<Word> queue=new LinkedList<>();
-        Map<Character,Word> children=root.next;
-        for(Word node:children.values())
-        {
-            node.failOver=root;
-            queue.offer(node);
+
+    /**
+     * 构建失败指针
+     */
+    private void buildFailurePointers() {
+        Queue<ACNode> queue = new LinkedList<>();
+
+        // 初始化根节点的直接子节点
+        for (ACNode child : root.children.values()) {
+            child.failure = root;
+            queue.add(child);
         }
-        while(!queue.isEmpty())
-        {
-            Word parentNode=queue.poll();
-            for(Map.Entry<Character,Word> entry:parentNode.next.entrySet())
-            {
-                Word childNode=entry.getValue();
-                Word failOver=parentNode.failOver;
-                while(failOver!=null&&(!failOver.next.containsKey(entry.getKey()))){
-                    failOver=failOver.failOver;
+
+        while (!queue.isEmpty()) {
+            ACNode current = queue.poll();
+
+            for (Map.Entry<Character, ACNode> entry : current.children.entrySet()) {
+                char c = entry.getKey();
+                ACNode child = entry.getValue();
+
+                // 设置 failure 指针
+                ACNode failure = current.failure;
+                while (failure != root && !failure.children.containsKey(c)) {
+                    failure = failure.failure;
                 }
-                if(failOver==null){
-                    childNode.failOver=root;
-                }else{
-                    childNode.failOver=failOver.next.get(entry.getKey());
+                if (failure.children.containsKey(c) && failure.children.get(c) != child) {
+                    child.failure = failure.children.get(c);
+                } else {
+                    child.failure = root;
                 }
-                queue.offer(childNode);
+
+                // 始终合并失败节点的输出，无条件
+                child.output.addAll(child.failure.output);
+
+                // 将子节点加入队列
+                queue.add(child);
             }
         }
     }
 
-    public List<String> findSensitiveWords(String text){
+    /**
+     * 搜索文本中的敏感词，并返回找到的敏感词集合
+     *
+     * @param text 需要搜索的文本
+     * @return 找到的敏感词集合
+     */
+    public List<String> findSensitiveWords(String text) {
         List<String> sensitiveWords = new ArrayList<>();
-        Word walkNode = root;
-        char[] wordArray = text.toCharArray();
-        for (int i = 0; i < wordArray.length; i++) {
-            // 失败"回溯"
-            while (!walkNode.hasChild(wordArray[i]) && walkNode.failOver != null) {
-                walkNode = walkNode.failOver;
+        ACNode currentNode = root;
+        char[] chars = text.toCharArray();
+
+        for (char c : chars) {
+            while (currentNode != root && !currentNode.children.containsKey(c)) {
+                currentNode = currentNode.failure;
             }
-            if (walkNode.hasChild(wordArray[i])) {
-                walkNode = walkNode.next.get(wordArray[i]);
-                if (walkNode.end) {
-                    // sentinelA和sentinelB作为哨兵节点，去后面探测是否仍存在end
-                    Word sentinelA = walkNode; // 记录当前节点
-                    Word sentinelB = walkNode; //记录end节点
-                    int k = i + 1;
-                    boolean flag = false;
-                    //判断end是不是最终end即敏感词是否存在包含关系(abc,abcd)
-                    while (k < wordArray.length && sentinelA.hasChild(wordArray[k])) {
-                        sentinelA = sentinelA.next.get(wordArray[k]);
-                        k++;
-                        if (sentinelA.end) {
-                            sentinelB = sentinelA;
-                            flag = true;
-                        }
-                    }
-                    // 计算敏感词的长度
-                    int len = flag ? sentinelB.depth : walkNode.depth;
-                    // 提取敏感词
-                    String sensitiveWord = text.substring(i - len + 1, i + 1);
-                    sensitiveWords.add(sensitiveWord);
-                    // 更新i
-                    i += flag ? sentinelB.depth : 0;
-                    // 更新node
-                    walkNode = flag ? sentinelB.failOver : walkNode.failOver;
-                }
+            currentNode = currentNode.children.getOrDefault(c, root);
+
+            if (!currentNode.output.isEmpty()) {
+                sensitiveWords.addAll(currentNode.output);
             }
         }
         return sensitiveWords;
     }
 
     /**
-     * 匹配并脱敏
-     * @param matchWord 待匹配语句
-     * @return 脱敏后语句
+     * AC 树节点定义
      */
-    public  String match(String matchWord)
-    {
-        Word walkNode = root;
-        char[] wordArray = matchWord.toCharArray();
-        for (int i = 0; i < wordArray.length; i++) {
-            // 失败"回溯"
-            while (!walkNode.hasChild(wordArray[i]) && walkNode.failOver != null) {
-                walkNode = walkNode.failOver;
-            }
-            if (walkNode.hasChild(wordArray[i])) {
-                walkNode = walkNode.next.get(wordArray[i]);
-                if (walkNode.end) {
-                    // sentinelA和sentinelB作为哨兵节点，去后面探测是否仍存在end
-                    Word sentinelA = walkNode; // 记录当前节点
-                    Word sentinelB = walkNode; //记录end节点
-                    int k = i + 1;
-                    boolean flag = false;
-                    //判断end是不是最终end即敏感词是否存在包含关系(abc,abcd)
-                    while (k < wordArray.length && sentinelA.hasChild(wordArray[k])) {
-                        sentinelA = sentinelA.next.get(wordArray[k]);
-                        k++;
-                        if (sentinelA.end) {
-                            sentinelB = sentinelA;
-                            flag = true;
-                        }
-                    }
-                    // 根据结果去替换*
-                    // 计算替换长度
-                    int len = flag ? sentinelB.depth : walkNode.depth;
-                    while (len > 0) {
-                        len--;
-                        int index = flag ? i - walkNode.depth + 1 + len : i - len;
-                        wordArray[index] = MASK;
-                    }
-                    // 更新i
-                    i += flag ? sentinelB.depth : 0;
-                    // 更新node
-                    walkNode = flag ? sentinelB.failOver : walkNode.failOver;
-                }
-            }
-        }
-        return new String(wordArray);
+    private static class ACNode {
+        Map<Character, ACNode> children = new HashMap<>();
+        ACNode failure = null;
+        boolean isEnd = false;
+        Set<String> output = new HashSet<>();
+
+        ACNode() {}
     }
 }

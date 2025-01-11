@@ -16,7 +16,7 @@
 
     <groupId>io.github.eumenides1</groupId>
     <artifactId>diting-spring-boot-starter</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.3_local</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -91,6 +91,12 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- 测试相关依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -24,36 +24,44 @@ public class MySqlWordLoader implements SensitiveWordLoader {
     private final String columns;
     private final Map<String, String> conditions;
 
-    public MySqlWordLoader(DataSource dataSource, DitingProperties properties) {
+    /**
+     * 修改后的构造函数，接收单独的参数
+     *
+     * @param dataSource 数据源
+     * @param table      数据表名
+     * @param columns    需要查询的列
+     * @param conditions 查询条件
+     */
+    public MySqlWordLoader(DataSource dataSource, String table, String columns, Map<String, String> conditions) {
         this.dataSource = dataSource;
-        this.table = properties.getConfig().get("table").toString();
-        this.columns = properties.getConfig().getOrDefault("columns", "word").toString();
-        this.conditions = properties.getConfigMap("conditions");
+        this.table = table;
+        this.columns = columns;
+        this.conditions = conditions != null ? new HashMap<>(conditions) : Collections.emptyMap();
     }
 
     @Override
-    public List<String> loadSensitiveWords() throws Exception {
+    public Set<String> loadSensitiveWords() throws Exception {
         String sql = buildQuery();
         LOGGER.info("Generated SQL: {}", sql);
-        List<String> words = new ArrayList<>();
+        Set<String> words = new HashSet<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             // 动态填充条件参数
-            if (conditions != null) {
+            if (conditions != null && !conditions.isEmpty()) {
                 int paramIndex = 1;
                 for (String value : conditions.values()) {
                     statement.setString(paramIndex++, value);
                 }
             }
-            LOGGER.info("Generated statement: {}", statement);
+            LOGGER.debug("Executing statement: {}", statement);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    String word = resultSet.getString(1).trim();// 获取查询结果的第一列
+                    String word = resultSet.getString(1).trim(); // 获取查询结果的第一列
                     words.add(word);
                 }
             }
         }
-        LOGGER.info("Loaded sensitive words: {}", words);
+        LOGGER.info("Loaded {} sensitive words from MySQL.", words.size());
         return words;
     }
 
