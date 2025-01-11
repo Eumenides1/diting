@@ -16,17 +16,24 @@ import java.util.Set;
  * Author：eumenides
  * Created on: 2025/1/8
  * Description: JSON 配置加载器
+ *
+ * @author eumenides
  */
-
 public class JsonWordLoader implements SensitiveWordLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonWordLoader.class);
     private String resourcePath;
 
+    /**
+     * <p>Setter for the field <code>resourcePath</code>.</p>
+     *
+     * @param resourcePath a {@link java.lang.String} object
+     */
     public void setResourcePath(String resourcePath) {
         this.resourcePath = resourcePath;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Set<String> loadSensitiveWords() throws Exception {
         LOGGER.info("Loading sensitive words from JSON file: " + resourcePath);

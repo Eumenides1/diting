@@ -16,6 +16,8 @@ import java.util.Set;
  * Author：eumenides
  * Created on: 2025/1/8
  * Description: TXT 文件加载器
+ *
+ * @author eumenides
  */
 public class TxtWordLoader implements SensitiveWordLoader {
 
@@ -25,14 +27,25 @@ public class TxtWordLoader implements SensitiveWordLoader {
     private String delimiter = "\\n";
     private String resourcePath;
 
+    /**
+     * <p>Setter for the field <code>resourcePath</code>.</p>
+     *
+     * @param resourcePath a {@link java.lang.String} object
+     */
     public void setResourcePath(String resourcePath) {
         this.resourcePath = resourcePath;
     }
 
+    /**
+     * <p>Setter for the field <code>delimiter</code>.</p>
+     *
+     * @param delimiter a {@link java.lang.String} object
+     */
     public void setDelimiter(String delimiter) {
         this.delimiter = delimiter;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Set<String> loadSensitiveWords() throws Exception {
         LOGGER.info("Loading sensitive words from TXT file: {} with delimiter: {}", resourcePath, delimiter);

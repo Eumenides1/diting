@@ -3,15 +3,23 @@ package com.rookie.diting.ac;
 import java.util.*;
 
 /**
+ * <p>ACTrie class.</p>
+ *
  * @Classname ACTrie
  * @Description AC 树
  * @Date 2025/1/10 14:38
  * @Created by liujiapeng
+ * @author eumenides
  */
 public class ACTrie {
 
     private final ACNode root;
 
+    /**
+     * <p>Constructor for ACTrie.</p>
+     *
+     * @param keywords a {@link java.util.List} object
+     */
     public ACTrie(List<String> keywords) {
         root = new ACNode();
         buildTrie(keywords);

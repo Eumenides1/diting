@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
  * Author：eumenides
  * Created on: 2025/1/11
  * Description:
+ *
+ * @author eumenides
  */
 @Service
 public class SensitiveWordService {
@@ -21,6 +23,11 @@ public class SensitiveWordService {
     private final SensitiveWordContext sensitiveWordContext;
 
     @Autowired
+    /**
+     * <p>Constructor for SensitiveWordService.</p>
+     *
+     * @param sensitiveWordContext a {@link com.rookie.diting.context.SensitiveWordContext} object
+     */
     public SensitiveWordService(SensitiveWordContext sensitiveWordContext) {
         this.sensitiveWordContext = sensitiveWordContext;
     }

@@ -14,16 +14,24 @@ import java.util.Set;
  * Author：eumenides
  * Created on: 2025/1/11
  * Description:
+ *
+ * @author eumenides
  */
 public class CompositeSensitiveWordLoader implements SensitiveWordLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(CompositeSensitiveWordLoader.class);
 
     private final List<SensitiveWordLoader> loaders;
 
+    /**
+     * <p>Constructor for CompositeSensitiveWordLoader.</p>
+     *
+     * @param loaders a {@link java.util.List} object
+     */
     public CompositeSensitiveWordLoader(List<SensitiveWordLoader> loaders) {
         this.loaders = loaders;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Set<String> loadSensitiveWords() throws Exception {
         Set<String> combinedWords = new HashSet<>();

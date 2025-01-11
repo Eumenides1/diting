@@ -23,6 +23,8 @@ import java.util.List;
  * Author：eumenides
  * Created on: 2025/1/8
  * Description:
+ *
+ * @author eumenides
  */
 @Configuration
 @EnableConfigurationProperties(DitingProperties.class)
@@ -33,6 +35,11 @@ public class DitingAutoConfiguration {
     @Resource
     private DitingProperties properties;
 
+    /**
+     * <p>txtWordLoader.</p>
+     *
+     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.loaders.txt", name = "enabled", havingValue = "true")
     public SensitiveWordLoader txtWordLoader() {
@@ -45,6 +52,11 @@ public class DitingAutoConfiguration {
         return txtLoader;
     }
 
+    /**
+     * <p>jsonWordLoader.</p>
+     *
+     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.loaders.json", name = "enabled", havingValue = "true")
     public SensitiveWordLoader jsonWordLoader() {
@@ -57,6 +69,12 @@ public class DitingAutoConfiguration {
         return jsonLoader;
     }
 
+    /**
+     * <p>mysqlWordLoader.</p>
+     *
+     * @param dataSource a {@link javax.sql.DataSource} object
+     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.loaders.mysql", name = "enabled", havingValue = "true")
     public SensitiveWordLoader mysqlWordLoader(DataSource dataSource) {
@@ -70,6 +88,12 @@ public class DitingAutoConfiguration {
         return new MySqlWordLoader(dataSource, mysql.getTable(), mysql.getColumns(), mysql.getConditions());
     }
 
+    /**
+     * <p>redisWordLoader.</p>
+     *
+     * @param redisTemplate a {@link org.springframework.data.redis.core.RedisTemplate} object
+     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.loaders.redis", name = "enabled", havingValue = "true")
     public SensitiveWordLoader redisWordLoader(RedisTemplate<String, String> redisTemplate) {
@@ -81,6 +105,11 @@ public class DitingAutoConfiguration {
     }
 
     // 默认的 TxtWordLoader，加载组件内置的敏感词库
+    /**
+     * <p>defaultWordLoader.</p>
+     *
+     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.default-loader", name = "enabled", havingValue = "true", matchIfMissing = true)
     public SensitiveWordLoader defaultWordLoader() {
@@ -94,6 +123,9 @@ public class DitingAutoConfiguration {
     }
     /**
      * 创建 CompositeSensitiveWordLoader，将所有启用的加载器组合起来
+     *
+     * @param loaders a {@link java.util.List} object
+     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
      */
     @Bean
     @Primary

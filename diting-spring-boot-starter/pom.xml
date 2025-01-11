@@ -16,7 +16,7 @@
 
     <groupId>io.github.eumenides1</groupId>
     <artifactId>diting-spring-boot-starter</artifactId>
-    <version>0.0.3_local</version>
+    <version>0.0.4</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -130,8 +130,9 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.10.0</version>
                 <configuration>
-                    <failOnError>false</failOnError> <!-- 忽略错误 -->
-                    <failOnWarnings>false</failOnWarnings> <!-- 忽略警告 -->
+                    <failOnError>true</failOnError> <!-- 构建失败时检查 Javadoc -->
+                    <doclint>none</doclint> <!-- 忽略较严格的 JavaDoc 规则 -->
+                    <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
                 <executions>
                     <execution>

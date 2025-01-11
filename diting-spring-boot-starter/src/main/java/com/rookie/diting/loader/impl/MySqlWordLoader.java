@@ -14,6 +14,8 @@ import java.util.*;
  * Author：eumenides
  * Created on: 2025/1/8
  * Description: MySQL 数据库加载器，用于从数据库中加载敏感词。
+ *
+ * @author eumenides
  */
 public class MySqlWordLoader implements SensitiveWordLoader {
 
@@ -39,6 +41,7 @@ public class MySqlWordLoader implements SensitiveWordLoader {
         this.conditions = conditions != null ? new HashMap<>(conditions) : Collections.emptyMap();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Set<String> loadSensitiveWords() throws Exception {
         String sql = buildQuery();

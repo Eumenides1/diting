@@ -15,6 +15,8 @@ import java.util.Set;
  * Author：eumenides
  * Created on: 2025/1/8
  * Description: Redis 加载器，用于从 Redis 中加载敏感词。
+ *
+ * @author eumenides
  */
 public class RedisWordLoader implements SensitiveWordLoader {
 
@@ -22,11 +24,18 @@ public class RedisWordLoader implements SensitiveWordLoader {
     private final RedisTemplate<String, String> redisTemplate;
     private final String key;
 
+    /**
+     * <p>Constructor for RedisWordLoader.</p>
+     *
+     * @param redisTemplate a {@link org.springframework.data.redis.core.RedisTemplate} object
+     * @param key a {@link java.lang.String} object
+     */
     public RedisWordLoader(RedisTemplate<String, String> redisTemplate, String key) {
         this.redisTemplate = redisTemplate;
         this.key = key;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Set<String> loadSensitiveWords() throws Exception {
         LOGGER.info("Loading sensitive words from Redis key: {}, data type: {}", key, redisTemplate.type(key));

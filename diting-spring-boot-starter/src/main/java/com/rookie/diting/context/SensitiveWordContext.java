@@ -14,10 +14,13 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * <p>SensitiveWordContext class.</p>
+ *
  * @Classname SensitiveWordContext
  * @Description 敏感词匹配上下文
  * @Date 2025/1/10 16:27
  * @Created by liujiapeng
+ * @author eumenides
  */
 @Component
 public class SensitiveWordContext {
@@ -26,12 +29,19 @@ public class SensitiveWordContext {
     private final SensitiveWordLoader loader;
     private ACTrie acTrie; // AC 自动机树
 
+    /**
+     * <p>Constructor for SensitiveWordContext.</p>
+     *
+     * @param loader a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     */
     public SensitiveWordContext(SensitiveWordLoader loader) {
         this.loader = loader;
     }
 
     /**
      * 初始化 AC 自动机树
+     *
+     * @throws java.lang.Exception if any.
      */
     @PostConstruct
     public void init() throws Exception {
@@ -43,6 +53,8 @@ public class SensitiveWordContext {
 
     /**
      * 获取 AC 自动机树
+     *
+     * @return a {@link com.rookie.diting.ac.ACTrie} object
      */
     public ACTrie getAcTrie() {
         if (acTrie == null) {
@@ -53,6 +65,8 @@ public class SensitiveWordContext {
 
     /**
      * 重新加载敏感词库并刷新 AC 自动机树
+     *
+     * @throws java.lang.Exception if any.
      */
     public synchronized void reloadSensitiveWords() throws Exception {
         LOGGER.info("Reloading sensitive words...");
