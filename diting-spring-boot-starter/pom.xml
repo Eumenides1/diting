@@ -16,7 +16,7 @@
 
     <groupId>io.github.eumenides1</groupId>
     <artifactId>diting-spring-boot-starter</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -132,7 +132,6 @@
                 <configuration>
                     <failOnError>true</failOnError> <!-- 构建失败时检查 Javadoc -->
                     <doclint>none</doclint> <!-- 忽略较严格的 JavaDoc 规则 -->
-                    <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
                 <executions>
                     <execution>
