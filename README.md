@@ -106,7 +106,7 @@ sensitive-word:
 ----
 
 ## 使用
-Diting 提供了 SensitiveWordService，可以在您的服务或控制器中注入并调用其方法来检测和替换敏感词。
+Diting 提供了 DitingUtil，可以在您的服务或控制器中直接调用其方法来检测和替换敏感词。
 #### 注入 SensitiveWordService
 ```java
 import com.rookie.diting.service.SensitiveWordService;
@@ -115,22 +115,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class YourService {
-
-    private final SensitiveWordService sensitiveWordService;
-
-    @Autowired
-    public YourService(SensitiveWordService sensitiveWordService) {
-        this.sensitiveWordService = sensitiveWordService;
-    }
-
     public void processText(String text) {
         // 检测敏感词
-        boolean contains = sensitiveWordService.containsSensitiveWord(text);
+        boolean contains = DitingUtil.containsSensitiveWord(text);
         if (contains) {
             // 获取敏感词
-            Set<String> words = sensitiveWordService.getSensitiveWords(text);
+            Set<String> words = DitingUtil.getSensitiveWords(text);
             // 替换敏感词
-            String sanitized = sensitiveWordService.replaceSensitiveWords(text, '*');
+            String sanitized = DitingUtil.replaceSensitiveWords(text, '*');
             // 处理逻辑
             System.out.println("包含敏感词：" + words);
             System.out.println("替换后的文本：" + sanitized);
@@ -141,7 +133,7 @@ public class YourService {
     }
 }
 ```
-#### SensitiveWordService 方法说明
+#### DitingUtil 方法说明
 - boolean containsSensitiveWord(String text) 检查文本是否包含敏感词。
 - Set<String> getSensitiveWords(String text) 获取文本中的敏感词集合。
 - String replaceSensitiveWords(String text, char replace)替换文本中的敏感词，使用指定的替换字符。

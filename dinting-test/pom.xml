@@ -27,7 +27,7 @@
         <dependency>
             <groupId>io.github.eumenides1</groupId>
             <artifactId>diting-spring-boot-starter</artifactId>
-            <version>0.0.3_local</version>
+            <version>0.0.4_util</version>
         </dependency>
         <!-- Spring Boot Test -->
         <dependency>
