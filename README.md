@@ -138,6 +138,63 @@ public class YourService {
 - Set<String> getSensitiveWords(String text) 获取文本中的敏感词集合。
 - String replaceSensitiveWords(String text, char replace)替换文本中的敏感词，使用指定的替换字符。
 
+#### 开启谛听控制台
+谛听`0.0.6以上`版本提供了敏感词检测和脱敏工具的控制台，这是一个可选的功能，可以通过简单的配置快速启用。
+
+1. 在你的项目中，除了引入敏感词检测组件的依赖，还需要确保引入以下必要的 Web 和 Thymeleaf 依赖：
+```xml
+<dependencies>
+    <!-- 敏感词检测组件 -->
+    <dependency>
+        <groupId>com.example</groupId>
+        <artifactId>diting-spring-boot-starter</artifactId>
+        <version>0.0.6</version>
+    </dependency>
+    
+    <!-- Web Starter -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    
+    <!-- Thymeleaf Starter -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+</dependencies>
+```
+>注意：
+> - 如果项目中未引入 spring-boot-starter-web 和 spring-boot-starter-thymeleaf，控制台页面将无法正常运行。
+> - 如果你已经使用其他模板引擎（如 FreeMarker），可以根据需要替换 Thymeleaf，但需要自行重写页面模板。
+
+2. 在 application.yml 或 application.properties 文件中配置以下内容：
+   - **使用 application.yml 配置**
+       ```yml
+       sensitive-word:
+         console:
+           enabled: true  # 启用控制台功能
+       ```
+   - **使用 application.properties 配置**
+        ```properties
+           sensitive-word.console.enabled=true  # 启用控制台功能
+        ```
+     > 控制台功能 默认开启，如果需要关闭，可以将 sensitive-word.console.enabled 设置为 false。
+
+3. 当控制台功能启用后，启动项目后可以通过以下路径访问：
+   - URL 地址: http://localhost:8080/sensitive-word-console
+
+    页面功能包含两个主要区域：
+   1.	检测敏感词：输入文本，检测其中是否包含敏感词，并展示检测结果。
+   2.	脱敏处理：输入文本和替换字符，处理敏感词并展示脱敏后的结果。
+
+4. 如果你需要自定义控制台页面，可以按以下步骤操作来覆盖默认模板文件
+   1.	在你的项目的 src/main/resources/templates 目录中创建一个名为 sensitive-word-console.html 的文件。
+   2.	修改或替换默认的控制台页面内容。
+
+    修改样式 ：如果需要自定义页面样式，可以直接修改 Thymeleaf 模板中的 CSS，也可以引入你自己的样式文件。
+   如果需要自定义页面样式，可以直接修改 Thymeleaf 模板中的 CSS，也可以引入你自己的样式文件。
+![img.png](static/diting_console.png)
 ## 未来规划
 
 目前，Diting 主要提供了服务层的敏感词检测与替换功能。未来，我们计划引入以下功能以提升组件的易用性和集成性：

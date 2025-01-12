@@ -28,6 +28,9 @@ public class DitingProperties {
     private Loaders loaders;
     @Description("是否开启默认敏感词库加载")
     private DefaultLoader defaultLoader;
+    // 控制台相关配置
+    @Description("是否启用控制台页面")
+    private boolean consoleEnabled = true;
 
     @Data
     public static class Loaders {

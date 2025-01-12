@@ -1,4 +1,5 @@
 sensitive-word:
+  console-enabled: true
   loaders:
     txt:
       enabled: true
