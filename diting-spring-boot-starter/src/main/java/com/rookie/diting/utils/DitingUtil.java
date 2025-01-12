@@ -70,6 +70,16 @@ public class DitingUtil {
     }
 
     /**
+     * 手动刷新敏感词库
+     *
+     * @throws Exception 如果刷新敏感词库失败
+     */
+    public static void reloadSensitiveWords() throws Exception {
+        ensureInitialized();
+        sensitiveWordContext.reloadSensitiveWords();
+    }
+
+    /**
      * 确保上下文已初始化
      */
     private static void ensureInitialized() {
@@ -92,6 +102,4 @@ public class DitingUtil {
         }
         return sb.toString();
     }
-
-
 }
