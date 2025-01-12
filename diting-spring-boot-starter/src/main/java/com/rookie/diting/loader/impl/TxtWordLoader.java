@@ -1,5 +1,6 @@
 package com.rookie.diting.loader.impl;
 
+import com.rookie.diting.constants.Delimiter;
 import com.rookie.diting.loader.SensitiveWordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,56 +24,45 @@ public class TxtWordLoader implements SensitiveWordLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TxtWordLoader.class);
 
-    // 默认分隔符为换行
-    private String delimiter = "\\n";
-    private String resourcePath;
+    private String delimiter = "\\n"; // 默认分隔符为换行
+    private List<String> resourcePaths; // 支持多个文件路径
 
-    /**
-     * <p>Setter for the field <code>resourcePath</code>.</p>
-     *
-     * @param resourcePath a {@link java.lang.String} object
-     */
-    public void setResourcePath(String resourcePath) {
-        this.resourcePath = resourcePath;
+    public void setResourcePaths(List<String> resourcePaths) {
+        this.resourcePaths = resourcePaths;
     }
 
-    /**
-     * <p>Setter for the field <code>delimiter</code>.</p>
-     *
-     * @param delimiter a {@link java.lang.String} object
-     */
     public void setDelimiter(String delimiter) {
         this.delimiter = delimiter;
     }
 
-    /** {@inheritDoc} */
     @Override
     public Set<String> loadSensitiveWords() throws Exception {
-        LOGGER.info("Loading sensitive words from TXT file: {} with delimiter: {}", resourcePath, delimiter);
-        // 加载敏感词
-        Set<String> words = loadWordsFromTxt();
+        // 如果未设置 delimiter，使用默认值
+        if (this.delimiter == null || this.delimiter.isEmpty()) {
+            this.delimiter = Delimiter.NEWLINE.getValue();
+        }
+        LOGGER.info("Loading sensitive words from TXT files: {} with delimiter: {}", resourcePaths, delimiter);
+        Set<String> words = new HashSet<>();
+        for (String resourcePath : resourcePaths) {
+            words.addAll(loadWordsFromTxt(resourcePath));
+        }
         return words;
     }
-    /**
-     * 从 TXT 文件中加载敏感词
-     */
-    private Set<String> loadWordsFromTxt() throws Exception {
+
+    private Set<String> loadWordsFromTxt(String resourcePath) throws Exception {
         Set<String> words = new HashSet<>();
         ClassPathResource resource = new ClassPathResource(resourcePath);
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
-            StringBuilder content = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n"); // 保证所有内容读取
-            }
-            LOGGER.info("delimiter: {}", delimiter);
-            String[] wordArray = content.toString().split(delimiter);
-            for (String word : wordArray) {
-                if (!word.trim().isEmpty()) {
-                    words.add(word.trim());
+                for (String word : line.split(delimiter)) {
+                    if (!word.trim().isEmpty()) {
+                        words.add(word.trim());
+                    }
                 }
             }
         }
+        LOGGER.info("Loaded {} sensitive words from {}", words.size(), resourcePath);
         return words;
     }
 }

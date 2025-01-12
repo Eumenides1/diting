@@ -17,11 +17,6 @@ public enum Delimiter {
         this.value = value;
     }
 
-    /**
-     * <p>Getter for the field <code>value</code>.</p>
-     *
-     * @return a {@link java.lang.String} object
-     */
     public String getValue() {
         return value;
     }
@@ -33,6 +28,9 @@ public enum Delimiter {
      * @return a {@link java.lang.String} object
      */
     public static String getDelimiterValue(String key) {
+        if (key == null || key.isEmpty()) {
+            return NEWLINE.getValue(); // 如果 key 为空，返回默认值 NEWLINE
+        }
         for (Delimiter delimiter : values()) {
             if (delimiter.name().equalsIgnoreCase(key)) {
                 return delimiter.getValue();

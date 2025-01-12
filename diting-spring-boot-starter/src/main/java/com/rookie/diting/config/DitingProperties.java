@@ -1,6 +1,7 @@
 package com.rookie.diting.config;
 
 import com.rookie.diting.constants.Delimiter;
+import com.rookie.diting.constants.SensitiveWordType;
 import jakarta.validation.constraints.NotNull;
 import jdk.jfr.Description;
 import lombok.Data;
@@ -8,6 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +34,8 @@ public class DitingProperties {
     // 控制台相关配置
     @Description("是否启用控制台页面")
     private boolean consoleEnabled = true;
+    @Description("用户选择的敏感词类型，支持一种或多种，默认是 all")
+    private List<String> enabledTypes = Collections.singletonList("all"); // 默认是 "all"
 
     @Data
     public static class Loaders {
@@ -42,8 +47,9 @@ public class DitingProperties {
         @Data
         public static class Txt {
             private boolean enabled;
-            private String filePath;
-            private String delimiter;
+            @NotNull
+            private List<String> filePath;
+            private String delimiter = Delimiter.NEWLINE.getValue(); // 设置默认值为换行符
         }
         @Data
         public static class Json {

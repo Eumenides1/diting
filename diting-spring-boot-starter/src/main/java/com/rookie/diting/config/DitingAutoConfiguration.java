@@ -1,12 +1,11 @@
 package com.rookie.diting.config;
 
-import com.rookie.diting.constants.Delimiter;
+import com.rookie.diting.constants.SensitiveWordType;
 import com.rookie.diting.loader.SensitiveWordLoader;
 import com.rookie.diting.loader.impl.*;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +14,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -47,7 +48,7 @@ public class DitingAutoConfiguration {
         validateConfig(txt.getFilePath(), "filePath for TXT loader");
         LOGGER.info("Configuring TxtWordLoader with file path: {} and delimiter: {}", txt.getFilePath(), txt.getDelimiter());
         TxtWordLoader txtLoader = new TxtWordLoader();
-        txtLoader.setResourcePath(txt.getFilePath());
+        txtLoader.setResourcePaths(txt.getFilePath());
         txtLoader.setDelimiter(txt.getDelimiter());
         return txtLoader;
     }
@@ -113,12 +114,27 @@ public class DitingAutoConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.default-loader", name = "enabled", havingValue = "true", matchIfMissing = true)
     public SensitiveWordLoader defaultWordLoader() {
-        String defaultFilePath = "sensitive_word_dict.txt"; // 内置敏感词库路径
-        LOGGER.info("Loading default sensitive words from: {}", defaultFilePath);
+        List<String> enabledTypes = properties.getEnabledTypes(); // 确保是 List<String>
+        List<String> filePaths;
 
+        if (enabledTypes.contains(SensitiveWordType.ALL.getName())) {
+            // 如果是 "all"，只加载 all.txt
+            filePaths = List.of(SensitiveWordType.ALL.getFilename());
+        } else {
+            // 加载用户指定类型
+            filePaths = enabledTypes.stream()
+                    .map(SensitiveWordType::fromName)
+                    .filter(Objects::nonNull) // 过滤 null 值
+                    .map(SensitiveWordType::getFilename)
+                    .toList();
+        }
+
+        LOGGER.info("Loading default sensitive words from files: {}", filePaths);
+
+        // 创建并配置 TxtWordLoader
         TxtWordLoader defaultLoader = new TxtWordLoader();
-        defaultLoader.setResourcePath(defaultFilePath);
-        defaultLoader.setDelimiter("\n"); // 内置敏感词库使用换行分隔
+        defaultLoader.setResourcePaths(filePaths); // 修正为使用 List<String>
+        defaultLoader.setDelimiter("\n");
         return defaultLoader;
     }
     /**
@@ -134,9 +150,26 @@ public class DitingAutoConfiguration {
         return new CompositeSensitiveWordLoader(loaders);
     }
 
-    private void validateConfig(String value, String configName) {
-        if (value == null || value.isEmpty()) {
+    private void validateConfig(Object value, String configName) {
+        if (value == null) {
             throw new IllegalArgumentException("Missing required config: " + configName);
+        }
+
+        if (value instanceof String strValue) {
+            if (strValue.trim().isEmpty()) {
+                throw new IllegalArgumentException("Invalid config: " + configName + " is empty");
+            }
+        } else if (value instanceof List<?> listValue) {
+            if (listValue.isEmpty()) {
+                throw new IllegalArgumentException("Invalid config: " + configName + " is an empty list");
+            }
+            for (Object item : listValue) {
+                if (!(item instanceof String strItem) || strItem.trim().isEmpty()) {
+                    throw new IllegalArgumentException("Invalid config: " + configName + " contains invalid value: " + item);
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid config: " + configName + " is of unsupported type: " + value.getClass());
         }
     }
 }

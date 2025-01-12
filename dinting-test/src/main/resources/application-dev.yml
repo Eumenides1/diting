@@ -4,7 +4,7 @@ sensitive-word:
     txt:
       enabled: true
       filePath: sensitive_words.txt
-      delimiter:
+      delimiter: ','
     json:
       enabled: false
       filePath: sensitive_words.json
