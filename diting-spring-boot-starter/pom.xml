@@ -123,6 +123,7 @@
                 <includes>
                     <include>**/*.html</include>
                     <include>**/*.txt</include>
+                    <include>**/*.enc</include>
                 </includes>
             </resource>
         </resources>

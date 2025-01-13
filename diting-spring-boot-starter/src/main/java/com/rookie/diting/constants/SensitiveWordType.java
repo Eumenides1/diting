@@ -5,12 +5,12 @@ package com.rookie.diting.constants;
  */
 public enum SensitiveWordType {
 
-    VIOLENCE_TERROR("violence_terror", "暴恐", "violence_terror.txt"),
-    POLITICAL("political", "反动", "political.txt"),
-    LIVELIHOOD("livelihood", "民生", "livelihood.txt"),
-    PORNOGRAPHY("pornography", "色情", "pornography.txt"),
-    CORRUPTION("corruption", "贪腐", "corruption.txt"),
-    ALL("all", "全部", "all.txt");
+    VIOLENCE_TERROR("violence_terror", "暴恐", "violence_terror.enc"),
+    POLITICAL("political", "反动", "political.enc"),
+    LIVELIHOOD("livelihood", "民生", "livelihood.enc"),
+    PORNOGRAPHY("pornography", "色情", "pornography.enc"),
+    CORRUPTION("corruption", "贪腐", "corruption.enc"),
+    ALL("all", "全部", "all.enc");
 
     private final String name;    // 敏感词类型名称（唯一标识）
     private final String desc;    // 敏感词类型描述

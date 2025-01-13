@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class SensitiveWordFileMerger {
 
     private static final String RESOURCE_PATH = "src/main/resources/";
-    private static final String ALL_FILE_NAME = "all.txt";
+    private static final String ALL_FILE_NAME = "all.enc";
 
     public static void main(String[] args) throws IOException {
         appendSensitiveWordsToAll();
