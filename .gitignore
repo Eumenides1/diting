@@ -38,3 +38,8 @@ build/
 .DS_Store
 
 .idea/
+
+node_modules/
+
+diting-doc/.vitepress/
+diting-doc/.vitepress/dist/
