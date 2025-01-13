@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/diting/',
   title: '谛听-文档站',
   description: '轻量级高性能敏感词识别与数据脱敏组件',
   themeConfig: {
