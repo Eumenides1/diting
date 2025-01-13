@@ -1,4 +1,4 @@
-package com.rookie.diting.ac;
+package com.rookie.diting.core.ac;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +40,7 @@ public class ACTrieNode {
      * 返回当前节点的子节点中字符 c 对应的节点，如果不存在则返回 null。
      *
      * @param c a char
-     * @return a {@link com.rookie.diting.ac.ACTrieNode} object
+     * @return a {@link ACTrieNode} object
      */
     public ACTrieNode childOf(char c) {
         return children.get(c);

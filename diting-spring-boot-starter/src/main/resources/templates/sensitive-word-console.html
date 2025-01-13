@@ -90,7 +90,6 @@
     <div class="section">
         <h2>检测敏感词</h2>
         <form method="post" action="/check-sensitive-words">
-            <!-- 使用 th:value 绑定输入框内容 -->
             <textarea name="text" placeholder="请输入需要检测的文本"
                       th:value="${inputText != null ? inputText : ''}"></textarea>
             <button type="submit">检测敏感词</button>
@@ -99,7 +98,12 @@
             <h3>检测结果</h3>
             <p>是否包含敏感词：<span th:text="${containsSensitive ? '是' : '否'}"></span></p>
             <ul th:if="${sensitiveWords != null && !sensitiveWords.isEmpty()}">
-                <li th:each="word : ${sensitiveWords}" th:text="${word}"></li>
+                <li th:each="matchedWord : ${sensitiveWords}">
+                    敏感词：<span th:text="${matchedWord.word}"></span>，
+                    起始位置：<span th:text="${matchedWord.startIndex}"></span>，
+                    结束位置：<span th:text="${matchedWord.endIndex}"></span>，
+                    分类：<span th:text="${matchedWord.category}"></span>
+                </li>
             </ul>
         </div>
     </div>
@@ -108,9 +112,8 @@
     <div class="section">
         <h2>脱敏处理</h2>
         <form method="post" action="/sanitize-text">
-            <!-- 使用 th:value 绑定输入框内容 -->
             <textarea name="text" placeholder="请输入需要脱敏的文本"
-                      th:value="${sanitizeInputText != null ? sanitizeInputText : ''}"></textarea>
+                      th:value="${inputText != null ? inputText : ''}"></textarea>
             <label for="replaceChar">替换字符：</label>
             <input type="text" id="replaceChar" name="replaceChar"
                    th:value="${replaceChar != null ? replaceChar : '*'}" maxlength="1">

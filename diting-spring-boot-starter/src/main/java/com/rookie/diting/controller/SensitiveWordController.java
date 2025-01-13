@@ -1,5 +1,9 @@
 package com.rookie.diting.controller;
 
+import com.rookie.diting.constants.DesensitizationType;
+import com.rookie.diting.constants.ReplacementType;
+import com.rookie.diting.domain.MatchedWord;
+import com.rookie.diting.domain.SensitiveWordResult;
 import com.rookie.diting.utils.DitingUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Name：SensitiveWordController
@@ -26,15 +31,13 @@ public class SensitiveWordController {
 
     @PostMapping("/check-sensitive-words")
     public String checkSensitiveWords(@RequestParam("text") String text, Model model) {
-        // 获取敏感词列表
-        Set<String> sensitiveWords = DitingUtil.getSensitiveWords(text);
-        boolean containsSensitive = !sensitiveWords.isEmpty();
+        // 获取敏感词检测结果
+        SensitiveWordResult result = DitingUtil.getSensitiveWords(text);
 
         // 将结果传递到页面
         model.addAttribute("inputText", text);
-        model.addAttribute("containsSensitive", containsSensitive);
-        model.addAttribute("sensitiveWords", sensitiveWords);
-
+        model.addAttribute("containsSensitive", result.isHasSensitiveWord());
+        model.addAttribute("sensitiveWords", result.getMatchedWords());  // 提取敏感词内容
         return "sensitive-word-console";
     }
 
@@ -42,12 +45,13 @@ public class SensitiveWordController {
     public String sanitizeText(@RequestParam("text") String text,
                                @RequestParam("replaceChar") char replaceChar,
                                Model model) {
-        // 使用用户提供的替换字符脱敏文本
-        String sanitizedText = DitingUtil.replaceSensitiveWords(text, replaceChar);
+        // 获取脱敏后的文本
+        SensitiveWordResult result = DitingUtil.replaceSensitiveWords(text, DesensitizationType.FULL_REPLACEMENT, ReplacementType.ASTERISK);
 
         // 将结果传递到页面
         model.addAttribute("inputText", text);
-        model.addAttribute("sanitizedText", sanitizedText);
+        model.addAttribute("sanitizedText", result.getText()); // 获取脱敏后的文本
+        model.addAttribute("replaceChar", replaceChar);
 
         return "sensitive-word-console";
     }

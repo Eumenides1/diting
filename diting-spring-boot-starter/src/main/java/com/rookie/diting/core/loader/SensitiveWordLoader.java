@@ -1,6 +1,5 @@
-package com.rookie.diting.loader;
+package com.rookie.diting.core.loader;
 
-import java.util.List;
 import java.util.Set;
 
 /**

@@ -1,10 +1,9 @@
-package com.rookie.diting.loader.impl;
+package com.rookie.diting.core.loader.impl;
 
-import com.rookie.diting.loader.SensitiveWordLoader;
+import com.rookie.diting.core.loader.SensitiveWordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

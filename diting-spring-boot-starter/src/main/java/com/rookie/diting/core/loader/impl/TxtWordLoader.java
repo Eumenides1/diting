@@ -1,13 +1,12 @@
-package com.rookie.diting.loader.impl;
+package com.rookie.diting.core.loader.impl;
 
 import com.rookie.diting.constants.Delimiter;
-import com.rookie.diting.loader.SensitiveWordLoader;
+import com.rookie.diting.core.loader.SensitiveWordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

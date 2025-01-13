@@ -1,17 +1,17 @@
-package com.rookie.diting.context;
+package com.rookie.diting.core.context;
 
 
-import com.rookie.diting.ac.ACTrie;
-import com.rookie.diting.loader.SensitiveWordLoader;
+import com.rookie.diting.core.ac.ACTrie;
+import com.rookie.diting.domain.MatchedWord;
+import com.rookie.diting.domain.SensitiveWordResult;
+import com.rookie.diting.core.loader.SensitiveWordLoader;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>SensitiveWordContext class.</p>
@@ -32,7 +32,7 @@ public class SensitiveWordContext {
     /**
      * <p>Constructor for SensitiveWordContext.</p>
      *
-     * @param loader a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     * @param loader a {@link SensitiveWordLoader} object
      */
     public SensitiveWordContext(SensitiveWordLoader loader) {
         this.loader = loader;
@@ -54,7 +54,7 @@ public class SensitiveWordContext {
     /**
      * 获取 AC 自动机树
      *
-     * @return a {@link com.rookie.diting.ac.ACTrie} object
+     * @return a {@link ACTrie} object
      */
     public ACTrie getAcTrie() {
         if (acTrie == null) {

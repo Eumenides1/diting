@@ -1,12 +1,11 @@
-package com.rookie.diting.loader.impl;
+package com.rookie.diting.core.loader.impl;
 
-import com.rookie.diting.loader.SensitiveWordLoader;
+import com.rookie.diting.core.loader.SensitiveWordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 

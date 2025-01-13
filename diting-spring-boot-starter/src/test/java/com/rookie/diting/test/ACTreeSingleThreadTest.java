@@ -1,7 +1,7 @@
 package com.rookie.diting.test;
 
-import com.rookie.diting.context.SensitiveWordContext;
-import com.rookie.diting.loader.SensitiveWordLoader;
+import com.rookie.diting.core.context.SensitiveWordContext;
+import com.rookie.diting.core.loader.SensitiveWordLoader;
 
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +28,7 @@ public class ACTreeSingleThreadTest {
         System.out.println("开始测试...");
         long startTime = System.nanoTime();
 
-        List<String> result = context.findSensitiveWords(testText); // 检测敏感词
+        List<String> result = (List<String>) context.findSensitiveWords(testText); // 检测敏感词
 
         long endTime = System.nanoTime();
         long duration = endTime - startTime;

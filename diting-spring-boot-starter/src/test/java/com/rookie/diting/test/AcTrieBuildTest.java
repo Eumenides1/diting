@@ -1,7 +1,7 @@
 package com.rookie.diting.test;
 
-import com.rookie.diting.ac.ACTrie;
-import com.rookie.diting.loader.impl.TxtWordLoader;
+import com.rookie.diting.core.ac.ACTrie;
+import com.rookie.diting.core.loader.impl.TxtWordLoader;
 
 import java.util.ArrayList;
 import java.util.Collections;

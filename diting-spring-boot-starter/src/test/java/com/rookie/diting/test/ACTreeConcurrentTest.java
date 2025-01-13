@@ -1,7 +1,7 @@
 package com.rookie.diting.test;
 
-import com.rookie.diting.context.SensitiveWordContext;
-import com.rookie.diting.loader.SensitiveWordLoader;
+import com.rookie.diting.core.context.SensitiveWordContext;
+import com.rookie.diting.core.loader.SensitiveWordLoader;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;

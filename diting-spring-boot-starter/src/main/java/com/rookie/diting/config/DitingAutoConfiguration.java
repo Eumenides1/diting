@@ -1,8 +1,8 @@
 package com.rookie.diting.config;
 
 import com.rookie.diting.constants.SensitiveWordType;
-import com.rookie.diting.loader.SensitiveWordLoader;
-import com.rookie.diting.loader.impl.*;
+import com.rookie.diting.core.loader.SensitiveWordLoader;
+import com.rookie.diting.core.loader.impl.*;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public class DitingAutoConfiguration {
     /**
      * <p>txtWordLoader.</p>
      *
-     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     * @return a {@link SensitiveWordLoader} object
      */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.loaders.txt", name = "enabled", havingValue = "true")
@@ -56,7 +55,7 @@ public class DitingAutoConfiguration {
     /**
      * <p>jsonWordLoader.</p>
      *
-     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     * @return a {@link SensitiveWordLoader} object
      */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.loaders.json", name = "enabled", havingValue = "true")
@@ -74,7 +73,7 @@ public class DitingAutoConfiguration {
      * <p>mysqlWordLoader.</p>
      *
      * @param dataSource a {@link javax.sql.DataSource} object
-     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     * @return a {@link SensitiveWordLoader} object
      */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.loaders.mysql", name = "enabled", havingValue = "true")
@@ -93,7 +92,7 @@ public class DitingAutoConfiguration {
      * <p>redisWordLoader.</p>
      *
      * @param redisTemplate a {@link org.springframework.data.redis.core.RedisTemplate} object
-     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     * @return a {@link SensitiveWordLoader} object
      */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.loaders.redis", name = "enabled", havingValue = "true")
@@ -109,7 +108,7 @@ public class DitingAutoConfiguration {
     /**
      * <p>defaultWordLoader.</p>
      *
-     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     * @return a {@link SensitiveWordLoader} object
      */
     @Bean
     @ConditionalOnProperty(prefix = "sensitive-word.default-loader", name = "enabled", havingValue = "true", matchIfMissing = true)
@@ -141,7 +140,7 @@ public class DitingAutoConfiguration {
      * 创建 CompositeSensitiveWordLoader，将所有启用的加载器组合起来
      *
      * @param loaders a {@link java.util.List} object
-     * @return a {@link com.rookie.diting.loader.SensitiveWordLoader} object
+     * @return a {@link SensitiveWordLoader} object
      */
     @Bean
     @Primary

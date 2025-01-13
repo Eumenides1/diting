@@ -1,13 +1,12 @@
-package com.rookie.diting.loader.impl;
+package com.rookie.diting.core.loader.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rookie.diting.loader.SensitiveWordLoader;
+import com.rookie.diting.core.loader.SensitiveWordLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
