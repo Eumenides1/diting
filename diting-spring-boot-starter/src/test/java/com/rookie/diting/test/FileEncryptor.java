@@ -12,7 +12,7 @@ public class FileEncryptor {
     public static void main(String[] args) throws Exception {
         String inputFile = "src/main/resources/violence_terror.txt";
         String outputFile = "src/main/resources/violence_terror.enc";
-        String key = "t+PVQbfPn/Or0sqIa/EUnQ==";
+        String key = "";
 
         EncryptionUtils.encryptFile(inputFile, outputFile, key);
         System.out.println("File encrypted successfully.");
