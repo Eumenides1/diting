@@ -1,4 +1,4 @@
-# Diting - A Sensitive Word Detection Component
+谛听 - 轻量级高性能敏感词识别与数据脱敏组件
 
 `Diting` 是一个轻量级、可扩展的敏感词识别组件，支持多种方式加载敏感词库（TXT 文件、JSON 文件、MySQL 数据库、Redis），并提供基于 AC 自动机的高效敏感词匹配功能。
 
