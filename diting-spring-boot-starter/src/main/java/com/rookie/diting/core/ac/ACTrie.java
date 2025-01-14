@@ -1,5 +1,7 @@
 package com.rookie.diting.core.ac;
 
+import com.rookie.diting.core.filter.SensitiveWordFilter;
+
 import java.util.*;
 
 /**
@@ -91,6 +93,10 @@ public class ACTrie {
         char[] chars = text.toCharArray();
 
         for (char c : chars) {
+            // 如果是干扰符号，跳过
+            if (SensitiveWordFilter.isInterferenceSymbol(c)) {
+                continue;
+            }
             while (currentNode != root && !currentNode.children.containsKey(c)) {
                 currentNode = currentNode.failure;
             }

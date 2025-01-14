@@ -16,7 +16,7 @@
 
     <groupId>io.github.eumenides1</groupId>
     <artifactId>diting-spring-boot-starter</artifactId>
-    <version>0.0.5_util</version>
+    <version>0.0.7_util</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -27,6 +27,8 @@
         <spring.boot.version>3.2.6</spring.boot.version>
         <jackson.version>2.14.0</jackson.version>
         <mysql.version>8.0.32</mysql.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+        <opencc4j.version>1.8.0</opencc4j.version>
     </properties>
 
     <licenses>
@@ -65,6 +67,18 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- 拼音转换 -->
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>${pinyin4j.version}</version>
+        </dependency>
+        <!-- 简繁转换 -->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>opencc4j</artifactId>
+            <version>${opencc4j.version}</version>
         </dependency>
 
         <!-- 可选依赖 -->

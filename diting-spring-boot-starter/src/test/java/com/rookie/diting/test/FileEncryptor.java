@@ -10,11 +10,11 @@ import com.rookie.diting.utils.EncryptionUtils;
  */
 public class FileEncryptor {
     public static void main(String[] args) throws Exception {
-        String inputFile = "src/main/resources/violence_terror.txt";
+        String inputFile = "src/main/resources/dev_txt/violence_terror.txt";
         String outputFile = "src/main/resources/violence_terror.enc";
-        String key = "";
+        String key = "t+PVQbfPn/Or0sqIa/EUnQ==";
 
         EncryptionUtils.encryptFile(inputFile, outputFile, key);
-        System.out.println("File encrypted successfully.");
+        System.out.println("File decrypted successfully.");
     }
 }

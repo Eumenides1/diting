@@ -43,3 +43,5 @@ node_modules/
 
 diting-doc/.vitepress/
 diting-doc/.vitepress/dist/
+
+src/main/resources/dev_txt/

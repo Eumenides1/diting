@@ -28,7 +28,7 @@ public class SensitiveWordServiceTest {
 
     @Test
     public void testSensitiveWordServiceList() {
-        SensitiveWordResult result = DitingUtil.containsSensitiveWord("这是一段包含敏感词word1和word2的");
+        SensitiveWordResult result = DitingUtil.containsSensitiveWord("这是一段包含敏感词xi①jinp☁ing和總書記的");
         System.out.println(result);
     }
 
