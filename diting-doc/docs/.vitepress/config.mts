@@ -10,6 +10,7 @@ export default defineConfig({
     // 主题级选项
     nav: [
       { text: '快速开始', link: '/quick-start' },
+      {text: '配置',link: '/config'},
       {text: '博客', link: '/blog'}
     ],
     sidebar: {
