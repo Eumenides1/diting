@@ -1,40 +1,43 @@
 {
-  "hash": "c4d6312d",
-  "configHash": "62ffb2ff",
-  "lockfileHash": "b97b30c9",
-  "browserHash": "caaa804c",
+  "hash": "93c96b3e",
+  "configHash": "1720e607",
+  "lockfileHash": "9059e847",
+  "browserHash": "fe6b9a63",
   "optimized": {
     "vue": {
-      "src": "../../../../node_modules/.pnpm/vue@3.5.13/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "aadd4081",
+      "fileHash": "a1a135ff",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/.pnpm/@vue+devtools-api@7.7.0/node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "97e9ad58",
+      "fileHash": "afb683e9",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/.pnpm/@vueuse+core@11.3.0_vue@3.5.13/node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "141dca9e",
+      "fileHash": "119955b3",
       "needsInterop": false
     },
-    "@theme/index": {
-      "src": "../../../../node_modules/.pnpm/vitepress@1.5.0_@algolia+client-search@5.19.0_search-insights@2.17.3/node_modules/vitepress/dist/client/theme-default/index.js",
-      "file": "@theme_index.js",
-      "fileHash": "9fe7009d",
+    "canvas-confetti": {
+      "src": "../../../../node_modules/.pnpm/canvas-confetti@1.9.3/node_modules/canvas-confetti/dist/confetti.module.mjs",
+      "file": "canvas-confetti.js",
+      "fileHash": "c3fdcd47",
+      "needsInterop": false
+    },
+    "medium-zoom": {
+      "src": "../../../../node_modules/.pnpm/medium-zoom@1.1.0/node_modules/medium-zoom/dist/medium-zoom.esm.js",
+      "file": "medium-zoom.js",
+      "fileHash": "4616c210",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-B3BJSZXT": {
-      "file": "chunk-B3BJSZXT.js"
-    },
-    "chunk-JN5NFW2R": {
-      "file": "chunk-JN5NFW2R.js"
+    "chunk-LW4I4DCF": {
+      "file": "chunk-LW4I4DCF.js"
     }
   }
 }
