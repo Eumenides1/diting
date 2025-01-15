@@ -61,6 +61,7 @@ export default defineConfig({
     nav: [
       { text: '快速开始', link: '/quick-start' },
       {text: '配置',link: '/config'},
+      {text: '工具',link: '/tool'},
       {text: '博客', link: '/blog'}
     ],
     sidebar: {
@@ -76,5 +77,22 @@ export default defineConfig({
           }
       ]
     }
-  }
+  },
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: undefined, // 防止分包问题
+        },
+      },
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://106.54.240.161:8888', // 替换为你的后端服务地址
+          changeOrigin: true,
+        },
+      },
+    },
+  },
 })

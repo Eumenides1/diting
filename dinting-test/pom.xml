@@ -31,7 +31,7 @@
         <dependency>
             <groupId>io.github.eumenides1</groupId>
             <artifactId>diting-spring-boot-starter</artifactId>
-            <version>0.0.5_util</version>
+            <version>0.0.8</version>
         </dependency>
         <!-- Spring Boot Test -->
         <dependency>
@@ -60,6 +60,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

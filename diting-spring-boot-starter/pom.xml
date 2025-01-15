@@ -16,7 +16,7 @@
 
     <groupId>io.github.eumenides1</groupId>
     <artifactId>diting-spring-boot-starter</artifactId>
-    <version>0.0.5_util</version>
+    <version>0.0.8</version>
     <packaging>jar</packaging>
 
     <properties>

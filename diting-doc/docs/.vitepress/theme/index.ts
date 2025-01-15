@@ -1,6 +1,7 @@
 import DefaultTheme from "vitepress/theme";
 import "./styles/index.css"; //引入自定义的样式
 import Confetti from "./components/Confetti.vue";
+import SensitiveWordTool from "./components/SensitiveWordTool.vue";
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vitepress';
@@ -24,5 +25,6 @@ export default {
     // ...DefaultTheme, //或者这样写也可
     enhanceApp({ app, router }) {
         app.component("Confetti", Confetti); //注册全局组件
+        app.component("SensitiveWordTool",SensitiveWordTool);
     },
 };

@@ -1,3 +1,5 @@
+import "./chunk-PZ5AY32C.js";
+
 // node_modules/.pnpm/canvas-confetti@1.9.3/node_modules/canvas-confetti/dist/confetti.module.mjs
 var module = {};
 (function main(global, module2, isWorker, workerSize) {
