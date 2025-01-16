@@ -1,2 +1,3 @@
 com.rookie.diting.config.DitingAutoConfiguration
 com.rookie.diting.config.ConsoleConfiguration
+com.rookie.diting.config.AISensitiveConfiguration

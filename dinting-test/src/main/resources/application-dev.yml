@@ -1,4 +1,6 @@
 sensitive-word:
+  ai:
+    enabled: true
   console-enabled: true
   loaders:
     txt:

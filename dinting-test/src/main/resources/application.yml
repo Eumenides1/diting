@@ -1,6 +1,14 @@
 spring:
   profiles:
     active: dev
+  ai:
+    openai:
+      api-key: ${MY_API_KEY}
+      base-url: ${OPENAI_API_BASE}
+      chat:
+        options:
+          model: gpt-3.5-turbo
 
 server:
   port: 8888
+

@@ -1,9 +1,6 @@
 <template>
   <div class="tool-container">
     <div class="card">
-      <h2>敏感词识别工具</h2>
-      <p class="description">请输入文本并选择操作，查看敏感词识别和脱敏的效果。</p>
-
       <div class="form">
         <!-- 输入框 -->
         <div class="form-group">
@@ -101,18 +98,54 @@ export default {
       }
     },
     highlightSensitiveWords(matchedWords) {
-      // 高亮敏感词
-      let text = this.inputText;
-      matchedWords
-          .sort((a, b) => b.startIndex - a.startIndex) // 从后往前替换，避免索引错误
-          .forEach((word) => {
-            text =
-                text.slice(0, word.startIndex) +
-                `<span style="color: red; font-weight: bold;">${text.slice(word.startIndex, word.endIndex)}</span>` +
-                text.slice(word.endIndex);
-          });
+      // 构建敏感词位置索引数组
+      const ranges = matchedWords.map(word => ({
+        start: word.startIndex,
+        end: word.endIndex,
+        word: word.word,
+      }));
 
-      this.processedText = text; // 高亮后的文本
+      // 排序：优先处理起始索引更小的词，起始索引相同则处理更长的词
+      ranges.sort((a, b) => a.start - b.start || b.end - b.end);
+
+      // 合并重叠的范围
+      const mergedRanges = [];
+      for (const range of ranges) {
+        if (
+            mergedRanges.length > 0 &&
+            mergedRanges[mergedRanges.length - 1].end > range.start
+        ) {
+          // 合并范围：保留更大的结束索引
+          mergedRanges[mergedRanges.length - 1].end = Math.max(
+              mergedRanges[mergedRanges.length - 1].end,
+              range.end
+          );
+        } else {
+          // 不重叠的范围直接加入
+          mergedRanges.push(range);
+        }
+      }
+
+      // 构建高亮后的文本
+      let highlightedText = "";
+      let lastIndex = 0;
+
+      for (const range of mergedRanges) {
+        // 添加非敏感部分
+        highlightedText += this.inputText.slice(lastIndex, range.start);
+        // 添加高亮的敏感部分
+        highlightedText += `<span style="color: red; font-weight: bold;">${this.inputText.slice(
+            range.start,
+            range.end
+        )}</span>`;
+        lastIndex = range.end; // 更新最后处理位置
+      }
+
+      // 添加剩余的文本
+      highlightedText += this.inputText.slice(lastIndex);
+
+      // 更新到输入框
+      this.processedText = highlightedText;
     },
     replaceInputText(newText) {
       // 替换输入框内容为脱敏后的文本
