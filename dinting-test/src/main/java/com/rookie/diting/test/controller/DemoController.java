@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/sensitive-words")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "https://eumenides1.github.io", allowCredentials = "true", maxAge = 3600)
 public class DemoController {
 
     /**
