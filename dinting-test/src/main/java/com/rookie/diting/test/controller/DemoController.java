@@ -7,10 +7,7 @@ import com.rookie.diting.test.dto.SensitiveWordRequest;
 import com.rookie.diting.utils.DitingUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Name：SensitiveWordController
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/sensitive-words")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class DemoController {
 
     /**

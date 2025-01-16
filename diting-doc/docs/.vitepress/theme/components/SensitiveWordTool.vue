@@ -54,6 +54,10 @@
 <script>
 import axios from "axios";
 
+const BASE_URL = process.env.NODE_ENV === 'production'
+    ? 'http://106.54.240.161:8888'
+    : '/api'; // 本地开发仍然使用代理
+
 export default {
   data() {
     return {
@@ -77,13 +81,13 @@ export default {
         let response;
         if (this.selectedAction === "find") {
           // 调用发现敏感词的接口
-          response = await axios.post("/api/sensitive-words/find", {
+          response = await axios.post(`${BASE_URL}/sensitive-words/find`, {
             text: this.inputText,
           });
           this.highlightSensitiveWords(response.data.matchedWords);
         } else if (this.selectedAction === "find-and-desensitize") {
           // 调用发现并脱敏的接口
-          response = await axios.post("/api/sensitive-words/find-and-desensitize", {
+          response = await axios.post(`${BASE_URL}/sensitive-words/find-and-desensitize`, {
             text: this.inputText,
             desensitizationType: this.desensitizationType,
           });
