@@ -8,7 +8,7 @@ WORKDIR /app
 RUN pwd
 
 # 将构建好的 JAR 文件复制到容器中
-COPY ./target/dinting-test-*.jar app.jar
+COPY target/dinting-test-*.jar app.jar
 
 # 暴露应用程序运行的端口
 EXPOSE 8888
