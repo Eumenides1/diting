@@ -70,20 +70,19 @@ export default {
         alert("请输入文本");
         return;
       }
-
       this.loading = true;
-
       try {
+        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
         let response;
         if (this.selectedAction === "find") {
           // 调用发现敏感词的接口
-          response = await axios.post("/api/sensitive-words/find", {
+          response = await axios.post(`${apiBaseUrl}/sensitive-words/find`, {
             text: this.inputText,
           });
           this.highlightSensitiveWords(response.data.matchedWords);
         } else if (this.selectedAction === "find-and-desensitize") {
           // 调用发现并脱敏的接口
-          response = await axios.post("/api/sensitive-words/find-and-desensitize", {
+          response = await axios.post(`${apiBaseUrl}/sensitive-words/find-and-desensitize`, {
             text: this.inputText,
             desensitizationType: this.desensitizationType,
           });
