@@ -55,7 +55,7 @@
 import axios from "axios";
 
 const BASE_URL = process.env.NODE_ENV === 'production'
-    ? 'http://106.54.240.161:8888'
+    ? 'https://diting-server-97557-9-1325155828.sh.run.tcloudbase.com/api'
     : '/api'; // 本地开发仍然使用代理
 
 export default {
