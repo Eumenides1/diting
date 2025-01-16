@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Runtime API Examples | 谛听-文档站</title>
+    <meta name="description" content="轻量级高性能敏感词识别与数据脱敏组件">
+    <meta name="generator" content="VitePress v1.5.0">
+    <link rel="preload stylesheet" href="/diting/assets/style.DM50emCB.css" as="style">
+    <link rel="preload stylesheet" href="/diting/vp-icons.css" as="style">
+    
+    <script type="module" src="/diting/assets/app.IketbJ8x.js"></script>
+    <link rel="preload" href="/diting/assets/inter-roman-latin.Di8DUHzh.woff2" as="font" type="font/woff2" crossorigin="">
+    <link rel="modulepreload" href="/diting/assets/chunks/theme.D4_lXDaa.js">
+    <link rel="modulepreload" href="/diting/assets/chunks/framework.DXL5xpQl.js">
+    <link rel="modulepreload" href="/diting/assets/api-examples.md.Z1e0JBIO.lean.js">
+    <link rel="icon" href="/public/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap" rel="stylesheet">
+    <script id="register-sw">"serviceWorker"in navigator&&navigator.serviceWorker.register("/sw.js");</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=TAG_ID"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","TAG_ID");</script>
+    <script id="check-dark-mode">(()=>{const e=localStorage.getItem("vitepress-theme-appearance")||"auto",a=window.matchMedia("(prefers-color-scheme: dark)").matches;(!e||e==="auto"?a:e==="dark")&&document.documentElement.classList.add("dark")})();</script>
+    <script id="check-mac-os">document.documentElement.classList.toggle("mac",/Mac|iPhone|iPod|iPad/i.test(navigator.platform));</script>
+  </head>
+  <body>
+    <div id="app"><div class="Layout" data-v-11b68638><!--[--><!--]--><!--[--><span tabindex="-1" data-v-b57198e4></span><a href="#VPContent" class="VPSkipLink visually-hidden" data-v-b57198e4> Skip to content </a><!--]--><!----><header class="VPNav" data-v-11b68638 data-v-5a4fc5b2><div class="VPNavBar" data-v-5a4fc5b2 data-v-cc225f6e><div class="wrapper" data-v-cc225f6e><div class="container" data-v-cc225f6e><div class="title" data-v-cc225f6e><div class="VPNavBarTitle" data-v-cc225f6e data-v-a60f241c><a class="title" href="/diting/" data-v-a60f241c><!--[--><!--]--><!----><span data-v-a60f241c>谛</span><!--[--><!--]--></a></div></div><div class="content" data-v-cc225f6e><div class="content-body" data-v-cc225f6e><!--[--><!--]--><div class="VPNavBarSearch search" data-v-cc225f6e><!----></div><nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu" data-v-cc225f6e data-v-64ee96c3><span id="main-nav-aria-label" class="visually-hidden" data-v-64ee96c3> Main Navigation </span><!--[--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/diting/quick-start.html" tabindex="0" data-v-64ee96c3 data-v-eedeb74b><!--[--><span data-v-eedeb74b>快速开始</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/diting/config.html" tabindex="0" data-v-64ee96c3 data-v-eedeb74b><!--[--><span data-v-eedeb74b>配置</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/diting/tool.html" tabindex="0" data-v-64ee96c3 data-v-eedeb74b><!--[--><span data-v-eedeb74b>工具</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/diting/blog.html" tabindex="0" data-v-64ee96c3 data-v-eedeb74b><!--[--><span data-v-eedeb74b>博客</span><!--]--></a><!--]--><!--]--></nav><!----><div class="VPNavBarAppearance appearance" data-v-cc225f6e data-v-6740779b><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="false" data-v-6740779b data-v-18a21722 data-v-c9c2aaf7><span class="check" data-v-c9c2aaf7><span class="icon" data-v-c9c2aaf7><!--[--><span class="vpi-sun sun" data-v-18a21722></span><span class="vpi-moon moon" data-v-18a21722></span><!--]--></span></span></button></div><!----><div class="VPFlyout VPNavBarExtra extra" data-v-cc225f6e data-v-44ce12f0 data-v-113207bb><button type="button" class="button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation" data-v-113207bb><span class="vpi-more-horizontal icon" data-v-113207bb></span></button><div class="menu" data-v-113207bb><div class="VPMenu" data-v-113207bb data-v-3e8172b0><!----><!--[--><!--[--><!----><div class="group" data-v-44ce12f0><div class="item appearance" data-v-44ce12f0><p class="label" data-v-44ce12f0>Appearance</p><div class="appearance-action" data-v-44ce12f0><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="false" data-v-44ce12f0 data-v-18a21722 data-v-c9c2aaf7><span class="check" data-v-c9c2aaf7><span class="icon" data-v-c9c2aaf7><!--[--><span class="vpi-sun sun" data-v-18a21722></span><span class="vpi-moon moon" data-v-18a21722></span><!--]--></span></span></button></div></div></div><!----><!--]--><!--]--></div></div></div><!--[--><!--]--><button type="button" class="VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen" data-v-cc225f6e data-v-c79ad527><span class="container" data-v-c79ad527><span class="top" data-v-c79ad527></span><span class="middle" data-v-c79ad527></span><span class="bottom" data-v-c79ad527></span></span></button></div></div></div></div><div class="divider" data-v-cc225f6e><div class="divider-line" data-v-cc225f6e></div></div></div><!----></header><div class="VPLocalNav empty fixed" data-v-11b68638 data-v-cfa98ee4><div class="container" data-v-cfa98ee4><!----><div class="VPLocalNavOutlineDropdown" style="--vp-vh:0px;" data-v-cfa98ee4 data-v-2634a1f1><button data-v-2634a1f1>Return to top</button><!----></div></div></div><!----><div class="VPContent" id="VPContent" data-v-11b68638 data-v-d80a3215><div class="VPDoc has-aside" data-v-d80a3215 data-v-e58120ce><!--[--><!--]--><div class="container" data-v-e58120ce><div class="aside" data-v-e58120ce><div class="aside-curtain" data-v-e58120ce></div><div class="aside-container" data-v-e58120ce><div class="aside-content" data-v-e58120ce><div class="VPDocAside" data-v-e58120ce data-v-74c6ff59><!--[--><!--]--><!--[--><!--]--><nav aria-labelledby="doc-outline-aria-label" class="VPDocAsideOutline" data-v-74c6ff59 data-v-2f150ebb><div class="content" data-v-2f150ebb><div class="outline-marker" data-v-2f150ebb></div><div aria-level="2" class="outline-title" id="doc-outline-aria-label" role="heading" data-v-2f150ebb>On this page</div><ul class="VPDocOutlineItem root" data-v-2f150ebb data-v-0432ae26><!--[--><!--]--></ul></div></nav><!--[--><!--]--><div class="spacer" data-v-74c6ff59></div><!--[--><!--]--><!----><!--[--><!--]--><!--[--><!--]--></div></div></div></div><div class="content" data-v-e58120ce><div class="content-container" data-v-e58120ce><!--[--><!--]--><main class="main" data-v-e58120ce><div style="position:relative;" class="vp-doc _diting_api-examples" data-v-e58120ce><div><h1 id="runtime-api-examples" tabindex="-1">Runtime API Examples <a class="header-anchor" href="#runtime-api-examples" aria-label="Permalink to &quot;Runtime API Examples&quot;">​</a></h1><p>This page demonstrates usage of some of the runtime APIs provided by VitePress.</p><p>The main <code>useData()</code> API can be used to access site, theme, and page data for the current page. It works in both <code>.md</code> and <code>.vue</code> files:</p><div class="language-md vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">md</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;script setup&gt;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">import { useData } from &#39;vitepress&#39;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">const { theme, page, frontmatter } = useData()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;/script&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">## Results</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">### Theme Data</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;pre&gt;{{ theme }}&lt;/pre&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">### Page Data</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;pre&gt;{{ page }}&lt;/pre&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;">### Page Frontmatter</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">&lt;pre&gt;{{ frontmatter }}&lt;/pre&gt;</span></span></code></pre></div><h2 id="results" tabindex="-1">Results <a class="header-anchor" href="#results" aria-label="Permalink to &quot;Results&quot;">​</a></h2><h3 id="theme-data" tabindex="-1">Theme Data <a class="header-anchor" href="#theme-data" aria-label="Permalink to &quot;Theme Data&quot;">​</a></h3><pre>{
+  &quot;siteTitle&quot;: &quot;谛&quot;,
+  &quot;editLink&quot;: {
+    &quot;pattern&quot;: &quot;https://github.com/Eumenides1/diting/blob/main/diting-doc/docs/:path&quot;,
+    &quot;text&quot;: &quot;在 github 上编辑此页&quot;
+  },
+  &quot;nav&quot;: [
+    {
+      &quot;text&quot;: &quot;快速开始&quot;,
+      &quot;link&quot;: &quot;/quick-start&quot;
+    },
+    {
+      &quot;text&quot;: &quot;配置&quot;,
+      &quot;link&quot;: &quot;/config&quot;
+    },
+    {
+      &quot;text&quot;: &quot;工具&quot;,
+      &quot;link&quot;: &quot;/tool&quot;
+    },
+    {
+      &quot;text&quot;: &quot;博客&quot;,
+      &quot;link&quot;: &quot;/blog&quot;
+    }
+  ],
+  &quot;sidebar&quot;: {
+    &quot;/blog/&quot;: [
+      {
+        &quot;text&quot;: &quot;谛听开发博客&quot;,
+        &quot;items&quot;: [
+          {
+            &quot;text&quot;: &quot;谛听开发计划&quot;,
+            &quot;link&quot;: &quot;/blog/diting-plan&quot;
+          },
+          {
+            &quot;text&quot;: &quot;谛听（Diting）开发日记：Day 1 - 敏感词库加载&quot;,
+            &quot;link&quot;: &quot;/blog/day1&quot;
+          },
+          {
+            &quot;text&quot;: &quot;谛听（Diting）开发日记：Day 2 - 扩展加载器功能&quot;,
+            &quot;link&quot;: &quot;/blog/day2&quot;
+          },
+          {
+            &quot;text&quot;: &quot;谛听（Diting）开发日记：Day 3 - 深入浅出 AC 自动机&quot;,
+            &quot;link&quot;: &quot;/blog/day3&quot;
+          }
+        ]
+      }
+    ]
+  }
+}</pre><h3 id="page-data" tabindex="-1">Page Data <a class="header-anchor" href="#page-data" aria-label="Permalink to &quot;Page Data&quot;">​</a></h3><pre>{
+  &quot;title&quot;: &quot;Runtime API Examples&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;frontmatter&quot;: {
+    &quot;outline&quot;: &quot;deep&quot;
+  },
+  &quot;headers&quot;: [],
+  &quot;relativePath&quot;: &quot;api-examples.md&quot;,
+  &quot;filePath&quot;: &quot;api-examples.md&quot;
+}</pre><h3 id="page-frontmatter" tabindex="-1">Page Frontmatter <a class="header-anchor" href="#page-frontmatter" aria-label="Permalink to &quot;Page Frontmatter&quot;">​</a></h3><pre>{
+  &quot;outline&quot;: &quot;deep&quot;
+}</pre><h2 id="more" tabindex="-1">More <a class="header-anchor" href="#more" aria-label="Permalink to &quot;More&quot;">​</a></h2><p>Check out the documentation for the <a href="https://vitepress.dev/reference/runtime-api#usedata" target="_blank" rel="noreferrer">full list of runtime APIs</a>.</p></div></div></main><footer class="VPDocFooter" data-v-e58120ce data-v-25eebaad><!--[--><!--]--><div class="edit-info" data-v-25eebaad><div class="edit-link" data-v-25eebaad><a class="VPLink link vp-external-link-icon no-icon edit-link-button" href="https://github.com/Eumenides1/diting/blob/main/diting-doc/docs/api-examples.md" target="_blank" rel="noreferrer" data-v-25eebaad><!--[--><span class="vpi-square-pen edit-link-icon" data-v-25eebaad></span> 在 github 上编辑此页<!--]--></a></div><!----></div><!----></footer><!--[--><!--]--></div></div></div><!--[--><!--]--></div></div><!----><!--[--><!--]--></div></div>
+    <script>window.__VP_HASH_MAP__=JSON.parse("{\"api-examples.md\":\"Z1e0JBIO\",\"blog_day1.md\":\"DFQsnT-4\",\"blog_day2.md\":\"BCd8j-Wy\",\"blog_day3.md\":\"DBk-NeOB\",\"blog_diting-plan.md\":\"CRByyB_n\",\"blog_index.md\":\"D8pqKSE2\",\"config_index.md\":\"h7OVVc7T\",\"index.md\":\"jzFmQUJ_\",\"markdown-examples.md\":\"D_gsePEA\",\"quick-start_index.md\":\"CGweqBxR\",\"tool.md\":\"e5hQiKAZ\"}");window.__VP_SITE_DATA__=JSON.parse("{\"lang\":\"en-US\",\"dir\":\"ltr\",\"title\":\"谛听-文档站\",\"description\":\"轻量级高性能敏感词识别与数据脱敏组件\",\"base\":\"/diting/\",\"head\":[],\"router\":{\"prefetchLinks\":true},\"appearance\":true,\"themeConfig\":{\"siteTitle\":\"谛\",\"editLink\":{\"pattern\":\"https://github.com/Eumenides1/diting/blob/main/diting-doc/docs/:path\",\"text\":\"在 github 上编辑此页\"},\"nav\":[{\"text\":\"快速开始\",\"link\":\"/quick-start\"},{\"text\":\"配置\",\"link\":\"/config\"},{\"text\":\"工具\",\"link\":\"/tool\"},{\"text\":\"博客\",\"link\":\"/blog\"}],\"sidebar\":{\"/blog/\":[{\"text\":\"谛听开发博客\",\"items\":[{\"text\":\"谛听开发计划\",\"link\":\"/blog/diting-plan\"},{\"text\":\"谛听（Diting）开发日记：Day 1 - 敏感词库加载\",\"link\":\"/blog/day1\"},{\"text\":\"谛听（Diting）开发日记：Day 2 - 扩展加载器功能\",\"link\":\"/blog/day2\"},{\"text\":\"谛听（Diting）开发日记：Day 3 - 深入浅出 AC 自动机\",\"link\":\"/blog/day3\"}]}]}},\"locales\":{},\"scrollOffset\":134,\"cleanUrls\":false}");</script>
+    
+  </body>
+</html>
